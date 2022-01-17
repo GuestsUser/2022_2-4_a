@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class StaminaGage : MonoBehaviour
 {
-    [SerializeField] private float max_gage=100;//ゲージ最大量、これを増やしてもゲージは伸びない、減るのが遅くなる事で大容量化する
-    [SerializeField] private float pinch_timing;//ピンチ演出に入るタイミング
+    [SerializeField] private float MaxGage;//ゲージ最大量、これを増やしてもゲージは伸びない、減るのが遅くなる事で大容量化する
+    [SerializeField] private float PinchTiming;//ゲージ残量がこの値をゲージ最大に掛けた値以下になったらピンチ演出開始
     [SerializeField] private float pinch_pitch;//ピンチ演出の点灯間隔
-    private ulong count;
-    public float point { set; get; }//ゲージ現在量、setをpublic化するのは少し気が引ける……
+    float _point; //ゲージ現在量、setをpublic化するのは少し気が引ける……
+
+    public float max_gage { get { return MaxGage; } }//プロパティ名と変数名が逆転してる気もするが変数として外部から使うならこっちのが自然な気がする……
+    public float pinch_timing { get { return PinchTiming; } }
+    
+    public float point //ゲージ現在量、setをpublic化するのは少し気が引ける……
+    { 
+        set //max_gageより大きかったり0より小さくならないよう調整する
+        { 
+            if (value >= max_gage) { _point = max_gage; return; }
+            if (value <= 0) { _point = 0; return; }
+            _point = value;//問題ない場合だけここにたどり着く
+        }
+        get { return _point; }
+    }
 
     //扱う画像集
     [SerializeField] private GameObject normal;//ゲージ残量
@@ -18,16 +31,18 @@ public class StaminaGage : MonoBehaviour
     void Start()
     {
         point = max_gage;
+        StartCoroutine("Damage");
+        StartCoroutine("Pinch");
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        
-        
+        //デバッグ用、最終的に削除する
+        if (Input.GetKey(KeyCode.Joystick1Button0)) { point += 2; }
+        if (Input.GetKey(KeyCode.Joystick1Button1)) { point -= 2; }
     }
-
-    IEnumerator Damage() 
+    IEnumerator Damage() //ゲージ減少システム
     {
         while (true)
         {
@@ -42,15 +57,32 @@ public class StaminaGage : MonoBehaviour
 
 
 
-    IEnumerator Pinch() 
+    IEnumerator Pinch() //ピンチ演出
     {
-        float ratio = point / max_gage;//現在ポイントの最大値に対する割合がそのままダメージゲージ拡大率になる
-        if (ratio <= pinch_timing)
+        ulong count=0;
+        Color32 clear = new Color32(255, 255, 255, 156);
+        Color32 origin = pinch.gameObject.GetComponent<Renderer>().material.color;
+        while (true)
         {
-            normal.gameObject.SetActive(false);
-            //pinch.gameObject.GetComponent<Material>().
+            while (point > max_gage * pinch_timing) { yield return StartCoroutine("TimeStop"); }//演出開始まで待機
+
+            normal.gameObject.SetActive(false);//通常ゲージ不可視化
+            count = 0;
+
+            while (point <= max_gage * pinch_timing)//回復なんかで演出タイミングを超えるまで続ける
+            {
+                if (count%pinch_pitch==0)//pitchのタイミングで透明度交換
+                {
+                    if (Mathf.Floor(count/pinch_pitch)%2==0) { pinch.gameObject.GetComponent<Renderer>().material.color = origin; }
+                    else { pinch.gameObject.GetComponent<Renderer>().material.color = clear; }
+                }
+                count++;
+                yield return StartCoroutine("TimeStop"); 
+            }
+            normal.gameObject.SetActive(true);//通常ゲージ可視化
+
         }
-        yield return null;
+        
     }
 
 
