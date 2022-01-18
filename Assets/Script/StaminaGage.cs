@@ -22,6 +22,7 @@ public class StaminaGage : MonoBehaviour
         }
         get { return _point; }
     }
+    [SerializeField] private Camera cam;//常にカメラの方向を向くシステム用
 
     //扱う画像集
     [SerializeField] private GameObject normal;//ゲージ残量
@@ -38,9 +39,11 @@ public class StaminaGage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        this.gameObject.transform.rotation= cam.gameObject.transform.rotation;//カメラの方を向く
         //デバッグ用、最終的に削除する
-        if (Input.GetKey(KeyCode.Joystick1Button0)) { point += 2; }
-        if (Input.GetKey(KeyCode.Joystick1Button1)) { point -= 2; }
+        //if (Input.GetKey(KeyCode.Joystick1Button0)) { point += 2; }
+        //if (Input.GetKey(KeyCode.Joystick1Button1)) { point -= 2; }
     }
     IEnumerator Damage() //ゲージ減少システム
     {
