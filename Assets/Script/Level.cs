@@ -1,13 +1,13 @@
-﻿    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-    public class Level : MonoBehaviour
-    {
+public class Level : MonoBehaviour
+{
 
     /*シャトルランのルール上の秒数：参照元：https://newbal.wiki.fc2.com/wiki/20m%E3%82%B7%E3%83%A3%E3%83%88%E3%83%AB%E3%83%A9%E3%83%B3%E3%81%AE%E9%80%9F%E3%81%95 */
-    public float[] level_time = 
-    { 
+    public float[] level_time =
+    {
 
         9.00f,/* Level_1  Count1   ～ 7 */
         8.00f,/* Level_2  Count8   ～ 15 */
@@ -108,7 +108,7 @@
         {
 
             audio.UnPause();
-            if (runcount >= level_count[level] && time < level_time[level] && level < 22 && otetuki<2)
+            if (runcount >= level_count[level] && time < level_time[level] && level < 22 && otetuki < 2)
             {
 
                 level++;
@@ -145,4 +145,4 @@
 
     }
 
-    }
+}
