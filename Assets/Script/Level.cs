@@ -65,6 +65,7 @@ public class Level : MonoBehaviour
     public int runcount = 0;        /*往復回数を記録する変数*/
     public int otetuki = 0;         /*失敗したときの変数(上限は２)*/
     public float time = 0f;         /*音源を再生してから数える変数*/
+    public float timemax = 5f;
     public bool StartGame = true;  /*ゲーム中かどうかを入れる(プレーヤー担当の人よろしく💛)*/
 
     public AudioSource audio;            /*シャトルラン音源を使用するオーディオソースを入れる*/
@@ -114,8 +115,24 @@ public class Level : MonoBehaviour
         //    runcount++;
 
         //}
-        time += Time.deltaTime;
+        //time += Time.deltaTime;
         /*動作テスト*/
+
+        if (audio.isPlaying)
+        {
+
+            if (timemax < 0f)
+            {
+
+                time += Time.deltaTime;
+
+            }
+            else
+            {
+                timemax -= Time.deltaTime;
+            }
+
+        }
 
 
         /*ゲーム中のみ音源が再生される*/
