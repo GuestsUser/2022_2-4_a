@@ -121,6 +121,12 @@ public class Level : MonoBehaviour
         {
 
             audio.UnPause();
+            if (time >= level_time[level])
+            {
+
+                time = 0;
+
+            }
             if (runcount >= level_count[level] && time < level_time[level] && level < 22 && otetuki < 2)
             {
 
@@ -131,12 +137,6 @@ public class Level : MonoBehaviour
                 {
 
                     otetuki = 0;
-
-                }
-                if (time >= level_time[level])
-                {
-
-                    time = 0;
 
                 }
 
@@ -174,7 +174,8 @@ public class Level : MonoBehaviour
 
                 position = maxposition - playerx;
 
-            }else if (maxposition < playerx)
+            }
+            else if (maxposition < playerx)
             {
 
                 position = playerx - maxposition;
