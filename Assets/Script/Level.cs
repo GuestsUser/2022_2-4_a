@@ -70,12 +70,14 @@ public class Level : MonoBehaviour
     public AudioSource audio;            /*シャトルラン音源を使用するオーディオソースを入れる*/
     [SerializeField] AudioClip clip;     /*シャトルラン音源*/
 
+    /*プレーヤー情報を入れる変数*/
     public GameObject run = GameObject.Find("player");
     public float playerx = 0f;
     public float maxposition = 0f;
     public float position = 0f;
     public float max = 0f;
     Vector3 playerposition;
+    /*プレーヤー情報を入れる変数*/
 
     // Start is called before the first frame update
     void Start()
