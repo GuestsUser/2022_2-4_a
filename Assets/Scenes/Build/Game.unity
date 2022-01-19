@@ -926,6 +926,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SG: {fileID: 658438732}
+  Move: 5
 --- !u!114 &1241137547
 MonoBehaviour:
   m_ObjectHideFlags: 0
