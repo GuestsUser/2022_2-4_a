@@ -70,6 +70,13 @@ public class Level : MonoBehaviour
     public AudioSource audio;            /*シャトルラン音源を使用するオーディオソースを入れる*/
     [SerializeField] AudioClip clip;     /*シャトルラン音源*/
 
+    public GameObject run = GameObject.Find("player");
+    public float playerx = 0f;
+    public float maxposition = 0f;
+    public float position = 0f;
+    public float max = 0f;
+    Vector3 playerposition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -78,6 +85,12 @@ public class Level : MonoBehaviour
         audio.Play();/*再生_test用*/
         StartGame = true;
         /*動作テスト用*/
+
+        playerposition = run.transform.position;
+        playerx = playerposition.x;
+        maxposition = playerposition.x;
+        max = 20f;
+
     }
 
     // Update is called once per frame
@@ -94,11 +107,11 @@ public class Level : MonoBehaviour
     void FixedUpdate()
     {
         /*動作テスト*/
-        if ((int)time % 3 == 0f && otetuki < 2)
-        {
-            runcount++;
+        //if ((int)time % 3 == 0f && otetuki < 2)
+        //{
+        //    runcount++;
 
-        }
+        //}
         time += Time.deltaTime;
         /*動作テスト*/
 
@@ -118,6 +131,12 @@ public class Level : MonoBehaviour
                 {
 
                     otetuki = 0;
+
+                }
+                if (time >= level_time[level])
+                {
+
+                    time = 0;
 
                 }
 
@@ -142,6 +161,37 @@ public class Level : MonoBehaviour
             audio.Pause();
 
         }
+
+
+        /*座標取得*/
+        if (StartGame)
+        {
+
+            playerposition = run.transform.position;
+            playerx = playerposition.x;
+            if (maxposition > playerx)
+            {
+
+                position = maxposition - playerx;
+
+            }else if (maxposition < playerx)
+            {
+
+                position = playerx - maxposition;
+
+            }
+
+            if (position >= max)
+            {
+                position = 0;
+                maxposition = playerposition.x;
+                runcount++;
+
+            }
+
+        }
+
+        /*座標取得*/
 
     }
 
