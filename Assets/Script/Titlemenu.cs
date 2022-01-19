@@ -20,25 +20,32 @@ public class Titlemenu : MonoBehaviour
     Animation _ArrowAnim;
 
     public static int MenuNumber = 0;
+    public int _MenuNumber { get{ return MenuNumber; } }
+    //例:public Vector3 Center { get { return _center; } }
     public static int ModeNumber = 0;
     RectTransform rect;
     RectTransform Mode1rect; //ひとりモードテキスト
+    public RectTransform _Mode1rect { get { return Mode1rect; } }
     RectTransform Mode2rect; //通信モードテキスト
+    public RectTransform _Mode2rect { get { return Mode2rect; } }
 
-    float X1 = 0; //ひとりモード用
-    float X2 = 375; //通信モード用
+    //float X1 = 0; //ひとりモード用
+    //float X2 = 375; //通信モード用
 
     private Vector3[] Goal = new Vector3[3];
 
     bool pushFlag = false; //縦用(押した判定)
     bool pushFlag2 = false; //横用(押した判定)
+    public bool _pushFlag2 { get { return pushFlag2; } } //他スクリプトで参照する用
     bool plusFlag = false; //右横スクロール用
     bool minusFlag = false; //左横スクロール用
 
+    /*色変える時に必要*/
     Text _Mode1;
     Text _Mode2;
     Text _start;
     Text _end;
+    /*色変える時に必要*/
 
 
     // Start is called before the first frame update
