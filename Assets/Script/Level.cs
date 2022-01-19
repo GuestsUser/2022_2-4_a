@@ -73,6 +73,7 @@
     // Start is called before the first frame update
     void Start()
     {
+        audio.clip = clip;
         /*動作テスト用*/
         audio.Play();/*再生_test用*/
         StartGame = true;
@@ -82,10 +83,10 @@
     // Update is called once per frame
     void Update()
     {
-        if (!StartGame)
-        {
-            StartGame = true;
-        }
+        //if (!StartGame)
+        //{
+        //    StartGame = true;
+        //}
         //StartGame = true;/*プレーヤー担当の人ここにゲーム中のフラグを入れて*/
 
     }
@@ -106,7 +107,7 @@
         if (StartGame)
         {
 
-            //audio.UnPause();
+            audio.UnPause();
             if (runcount >= level_count[level] && time < level_time[level] && level < 22 && otetuki<2)
             {
 
@@ -125,7 +126,12 @@
             {
 
                 //otetuki++;
-                //audio.Stop();
+                if (otetuki >= 2)
+                {
+
+                    audio.Stop();
+
+                }
 
             }
 
@@ -133,7 +139,7 @@
         else
         {
 
-            //audio.Pause();
+            audio.Pause();
 
         }
 
