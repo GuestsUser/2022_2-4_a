@@ -18,8 +18,8 @@ public class Pausemenu : MonoBehaviour
     /**/
 
     /*カーソルムーブ*/
-    public static int MenuNumber = 0;
-    public GameObject Cursor; //カーソルを認識するよう
+    public static int MenuNumber = 0; //メニュー番号
+    public GameObject Cursor; //カーソルのポジション取得に必要
     bool CursorFlg;
     bool Decision; //決定を押したか押してないか
 
@@ -39,6 +39,7 @@ public class Pausemenu : MonoBehaviour
         pushFlag = false;
         pushscene = false;
         Decision = false;
+        CursorFlg = false; //19:42追加
     }
 
     // Update is called once per frame
@@ -47,7 +48,6 @@ public class Pausemenu : MonoBehaviour
         if (Time.timeScale == 0)
         {
             LoadObject();
-            //_ReStart = 
             CursorMove();
         }
         //Debug.Log("Updateは正常に動いています");
