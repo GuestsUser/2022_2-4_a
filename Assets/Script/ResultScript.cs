@@ -36,12 +36,25 @@ public class ResultScript : MonoBehaviour
     float Opacity;
     bool MaxFlg; //透明度がmaxに達したかどうか
     float MaxOpacity; //透明度の分割数
+    /**/
+
+    /*フェードインに必要なもの*/
+    public GameObject FadePanel;
+    Image _FadePanel;
+    float FadeOpacity;
+    bool FadeFlg;
+    float FadeMaxOpacity;
+    /**/
 
     // Start is called before the first frame update
     void Start()
     {
         Operation = GameObject.Find("Operation");
         _Operation = Operation.GetComponent<Text>();
+
+        FadePanel = GameObject.Find("FadePanel");
+        _FadePanel = FadePanel.GetComponent<Image>();
+        FadeFlg = false;
 
         Retrymenu.SetActive(false);
         pushFlg = false;
@@ -51,19 +64,22 @@ public class ResultScript : MonoBehaviour
 
         MaxFlg = false;
         Opacity = 0;
-        MaxOpacity = 300;
+        MaxOpacity = 100;
+
+        FadeOpacity = 0;
+        FadeMaxOpacity = 100;
     }
 
     // Update is called once per frame
     void Update()
     {
         TextBlinking(); //テキストの点滅
+        FadeIN();
         _ShowMenu(); //リトライメニューの表示
 
     }
     private void TextBlinking()
     {
-        var a = 100;
         if (ShowMenu == false)
         {
             if (MaxFlg == false)
@@ -81,9 +97,29 @@ public class ResultScript : MonoBehaviour
         {
             Opacity = 0;
         }
-        Debug.Log(Opacity);
+        //Debug.Log(Opacity);
 
-        _Operation.color = new Color(0,0,0,Opacity/a); 
+        _Operation.color = new Color(0,0,0,Opacity/ MaxOpacity); 
+    }
+    private void FadeIN()
+    {
+        
+        if (ShowMenu == true)
+        {
+            if (FadeFlg == false)
+            {
+                FadeOpacity++;
+            }
+            if(FadeOpacity > FadeMaxOpacity / 4)
+            {
+                FadeFlg = true;
+            }
+        }
+        else
+        {
+            
+        }
+        _FadePanel.color = new Color(0, 0, 0, FadeOpacity / FadeMaxOpacity);
     }
     private void _ShowMenu()
     {
@@ -194,6 +230,11 @@ public class ResultScript : MonoBehaviour
                 break;
         }
     }
+    //private void Finalize()
+    //{
+    //    FadeFlg = false;
+    //    Opacity = 0;
+    //}
     private IEnumerator RetryCoroutine()
     {
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
