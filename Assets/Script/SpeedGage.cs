@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class SpeedGage : MonoBehaviour
 {
-    [SerializeField] Image Gage;    //ゲージ
+    [SerializeField] Image Gage = null;    //ゲージ
     public float GageAmount;   //ゲージの量
 
     //連打中の連打間隔
@@ -17,7 +17,7 @@ public class SpeedGage : MonoBehaviour
     bool isMashing;         //連打しているかどうか
     float second;           //連打間の秒数
 
-    [SerializeField] Text[] texts;
+    [SerializeField] Text[] texts = null;
 
     private void Start()
     {
