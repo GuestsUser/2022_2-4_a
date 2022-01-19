@@ -69,6 +69,8 @@ public class Titlemenu : MonoBehaviour
         Goal[1] = new Vector3(0, 0, 0);
         Goal[2] = new Vector3(375, 0, 0);
 
+        Mode1rect.localPosition = new Vector3(0, 0, 0);
+        Mode2rect.localPosition = new Vector3(-375, 0, 0);
     }
 
     // Update is called once per frame
@@ -239,7 +241,9 @@ public class Titlemenu : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
 
         SceneManager.LoadScene("Game");
-        Time.timeScale = 1;
+        MenuNumber = 0;
+        ModeNumber = 0;
+        //Time.timeScale = 1;
     }
     private IEnumerator EndCoroutine()
     {
