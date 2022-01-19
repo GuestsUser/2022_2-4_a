@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8088721036431148272}
   - component: {fileID: 312370291}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: BGMSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,9 +168,10 @@ MonoBehaviour:
   runcount: 0
   otetuki: 0
   time: 0
+  timemax: 5
   StartGame: 1
   audio: {fileID: 8088721036431148272}
-  clip: {fileID: 8300000, guid: 35a71bb7e0b12014da7af900d199cf38, type: 3}
+  clip: {fileID: 8300000, guid: d3f2f709357004f45adca19cb5e849c7, type: 3}
   run: {fileID: 0}
   playerx: 0
   maxposition: 0

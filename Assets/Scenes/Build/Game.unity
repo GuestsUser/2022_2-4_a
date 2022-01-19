@@ -452,6 +452,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: New Text
+--- !u!114 &574290802 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 312370291, guid: 8dd67519586d2d241a8eaf60605c2a0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1204332601}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 275b7b46e5cf2904c92d1ac55c62bd87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &658438731 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2270385174853717747, guid: 54b4893047f4f21459cbcc8788eb6af6,
@@ -999,6 +1011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SG: {fileID: 658438732}
+  level: {fileID: 574290802}
   Move: 5
 --- !u!114 &1241137547
 MonoBehaviour:
