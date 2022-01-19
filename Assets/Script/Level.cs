@@ -72,7 +72,7 @@ public class Level : MonoBehaviour
     [SerializeField] AudioClip clip;     /*シャトルラン音源*/
 
     /*プレーヤー情報を入れる変数*/
-    public GameObject run = GameObject.Find("player");
+    public GameObject run;
     public float playerx = 0f;
     public float maxposition = 0f;
     public float position = 0f;
@@ -83,6 +83,7 @@ public class Level : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        run = GameObject.Find("player");
         audio.clip = clip;
         /*動作テスト用*/
         audio.Play();/*再生_test用*/
