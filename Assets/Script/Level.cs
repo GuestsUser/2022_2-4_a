@@ -91,7 +91,7 @@ public class Level : MonoBehaviour
         playerposition = run.transform.position;
         playerx = playerposition.x;
         maxposition = playerposition.x;
-        max = 20f;
+        max = 19f;
 
     }
 
@@ -170,7 +170,7 @@ public class Level : MonoBehaviour
         {
 
             playerposition = run.transform.position;
-            playerx = playerposition.x / 2.0f;
+            playerx = playerposition.x;
             if (maxposition > playerx)
             {
 
@@ -187,7 +187,7 @@ public class Level : MonoBehaviour
             if (position >= max)
             {
                 position = 0;
-                maxposition = playerposition.x / 2.0f;
+                maxposition = playerposition.x;
                 runcount++;
 
             }
