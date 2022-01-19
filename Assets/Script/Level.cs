@@ -75,7 +75,7 @@ public class Level : MonoBehaviour
     public float playerx = 0f;
     public float maxposition = 0f;
     public float position = 0f;
-    public float max = 0f;
+    public float max = 19f;
     Vector3 playerposition;
     /*プレーヤー情報を入れる変数*/
 
