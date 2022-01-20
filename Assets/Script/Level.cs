@@ -72,7 +72,7 @@ public class Level : MonoBehaviour
     [SerializeField] AudioClip clip;     /*シャトルラン音源*/
 
     /*プレーヤー情報を入れる変数*/
-    public GameObject run;
+    public GameObject run = GameObject.Find("player");
     public float playerx = 0f;
     public float maxposition = 0f;
     public float position = 0f;
@@ -83,7 +83,6 @@ public class Level : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        run = GameObject.Find("player");
         audio.clip = clip;
         /*動作テスト用*/
         audio.Play();/*再生_test用*/
@@ -119,7 +118,7 @@ public class Level : MonoBehaviour
         //time += Time.deltaTime;
         /*動作テスト*/
 
-        if (audio.isPlaying)
+        if (audio.isPlaying && StartGame)
         {
 
             if (timemax < 0f)
@@ -144,33 +143,30 @@ public class Level : MonoBehaviour
             if (time >= level_time[level])
             {
 
+                if (position < max && time > level_time[level])
+                {
+
+
+                    otetuki++;
+
+                }
+
                 time = 0;
+
 
             }
             if (runcount >= level_count[level] && time < level_time[level] && level < 22 && otetuki < 2)
             {
 
                 level++;
-                otetuki--;
-
-                if (otetuki < 0)
-                {
-
-                    otetuki = 0;
-
-                }
 
             }
-            else if (otetuki < 2)
+            else if (otetuki >= 2)
             {
 
-                //otetuki++;
-                if (otetuki >= 2)
-                {
 
-                    audio.Stop();
-
-                }
+                audio.Stop();
+                StartGame = false;
 
             }
 
@@ -202,18 +198,20 @@ public class Level : MonoBehaviour
 
             }
 
-            if (position >= max)
+            if (position >= max && time <= level_time[level])
             {
                 position = 0;
                 maxposition = playerposition.x;
                 runcount++;
+                otetuki = 0;
 
             }
 
         }
-
         /*座標取得*/
 
     }
+
+
 
 }
