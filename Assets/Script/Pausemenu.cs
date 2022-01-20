@@ -13,12 +13,14 @@ public class Pausemenu : MonoBehaviour
     public GameObject ReTitle;
     bool pushFlag;
     public bool _pushFlag { get { return pushFlag; } }
-    bool pushscene; //現在何のシーンなのか　ひとりモードor通信モード
+    bool push_scene; //現在何のシーンなのか　ひとりモードor通信モード
+    public bool _push_scene { get { return push_scene; } }
     bool GameOver; //ゲームが終わっているのか続いているのか
     /**/
 
     /*カーソルムーブ*/
     public static int MenuNumber = 0; //メニュー番号
+    public int _MenuNumber { get { return MenuNumber; } }
     public GameObject Cursor; //カーソルのポジション取得に必要
     bool CursorFlg;
     bool Decision; //決定を押したか押してないか
@@ -31,15 +33,36 @@ public class Pausemenu : MonoBehaviour
     Text _ReTitle; //タイトルに戻る
     /**/
 
+    /*フェードアウトに必要なもの*/
+    public GameObject FadePanel;
+    Image _FadePanel;
+    float FadeOpacity;
+    bool FadeFlg;
+    float FadeMaxOpacity;
+
+    bool ShowMenu;
+    /**/
+
+    /*ロード処理*/
+    bool LoadFlg;
+    /**/
+
     // Start is called before the first frame update
     void Start()
     {
         _PausePanel.SetActive(false);
         GameOver = false;
         pushFlag = false;
-        pushscene = false;
+        push_scene = false;
         Decision = false;
         CursorFlg = false; //19:42追加
+
+        FadeOpacity = 0;
+        FadeMaxOpacity = 100;
+        FadeFlg = false;
+        ShowMenu = false;
+
+        LoadFlg = false;
     }
 
     // Update is called once per frame
@@ -47,8 +70,14 @@ public class Pausemenu : MonoBehaviour
     {
         if (Time.timeScale == 0)
         {
+            
             LoadObject();
-            CursorMove();
+            FadeIN();
+            if(push_scene == false)
+            {
+                CursorMove();
+            }
+            
         }
         //Debug.Log("Updateは正常に動いています");
         Pause();
@@ -60,7 +89,7 @@ public class Pausemenu : MonoBehaviour
         if (GameOver == false) //まだゲームオーバーじゃない
         {
 
-            if (pushscene == false) //ポーズメニューからAボタンを押して決定していない
+            if (push_scene == false) //ポーズメニューからAボタンを押して決定していない
             {
                 if (Time.timeScale == 0)//タイムスケールが0で
                 {
@@ -70,6 +99,10 @@ public class Pausemenu : MonoBehaviour
                         {
                             pushFlag = true; //押されたことにする
                             Time.timeScale = 1;
+                            FadeOpacity = 0;
+                            _FadePanel.color = new Color(0, 0, 0, 0);
+                            ShowMenu = false;
+                            FadeFlg = false;
                             _PausePanel.SetActive(false);
                         }
                     }
@@ -86,12 +119,16 @@ public class Pausemenu : MonoBehaviour
                         {
                             Time.timeScale = 0;
                             _PausePanel.SetActive(true);
-                            
+                            ShowMenu = true;
                         }
                         else
                         {
                             pushFlag = true;
                             Time.timeScale = 1;
+                            FadeOpacity = 0;
+                            _FadePanel.color = new Color(0, 0, 0, 0);
+                            ShowMenu = false;
+                            FadeFlg = false;
                             _PausePanel.SetActive(false);
                         }
                     }
@@ -106,15 +143,20 @@ public class Pausemenu : MonoBehaviour
 
     private void LoadObject()
     {
-        Cursor = GameObject.Find("cursor");
-        _Cursor = Cursor.GetComponent<RectTransform>();
-        ReStart = GameObject.Find("Restert");
-        Option = GameObject.Find("Option");
-        ReTitle = GameObject.Find("ReTitle");
+        if(LoadFlg == false) { 
+            Cursor = GameObject.Find("cursor");
+            _Cursor = Cursor.GetComponent<RectTransform>();
+            ReStart = GameObject.Find("Restert");
+            Option = GameObject.Find("Option");
+            ReTitle = GameObject.Find("ReTitle");
 
-        _ReStart = ReStart.GetComponent<Text>();
-        _Option = Option.GetComponent<Text>();
-        _ReTitle = ReTitle.GetComponent<Text>();
+            _ReStart = ReStart.GetComponent<Text>();
+            _Option = Option.GetComponent<Text>();
+            _ReTitle = ReTitle.GetComponent<Text>();
+
+            FadePanel = GameObject.Find("FadePanel");
+            _FadePanel = FadePanel.GetComponent<Image>();
+        }
     }
     private void CursorMove()
     {
@@ -171,7 +213,7 @@ public class Pausemenu : MonoBehaviour
                 {
                     if (Decision == false)
                     {
-                        Decision = true;
+                        //Decision = true;
                     }
                 }
                 break;
@@ -195,9 +237,27 @@ public class Pausemenu : MonoBehaviour
                 break;
         }
     }
+    private void FadeIN()
+    {
+        if(ShowMenu == true)
+        {
 
+            if (FadeFlg == false)
+            {
+                FadeOpacity++;
+            
+            }
+            if (FadeOpacity > FadeMaxOpacity / 4)
+            {
+                FadeFlg = true;
+            }
+        }
+
+        _FadePanel.color = new Color(0, 0, 0, FadeOpacity / FadeMaxOpacity);
+    }
     private IEnumerator RestartCoroutine() //シーンチェンジ用
     {
+        push_scene = true;
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
         
         SceneManager.LoadScene("Game");
@@ -205,6 +265,7 @@ public class Pausemenu : MonoBehaviour
     }
     private IEnumerator BacktoTitle() //シーンチェンジ用
     {
+        push_scene = true;
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
         
         SceneManager.LoadScene("Title");

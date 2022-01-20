@@ -14,7 +14,9 @@ public class ResultSE : MonoBehaviour
 
     public GameObject Retry;
     ResultScript Result; //Resultメニューで扱う変数を持ってくるため
-    
+
+    int Count;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,66 +26,72 @@ public class ResultSE : MonoBehaviour
         SEflag = false;
         SEflag2 = false;
         DecisionFlag = false;
+        Count = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (DecisionFlag == false)
+        Debug.Log(Result._showMenu);
+        
+        if (Result._push_scene == true)//他のシーンに遷移した時
         {
-
-            //Debug.Log(Title._MenuNumber);
-            if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
+            DecisionFlag = false;
+        }
+        else
+        {
+            if (Result._showMenu == true) //決定ボタンを押していない間
             {
-                if (SEflag == false)
+                if (DecisionFlag == false)
                 {
-                    audio.PlayOneShot(Cursolmove);
-                    SEflag = true;
-                }
-            }
-            else if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == 1))
-            {
-                if (SEflag == false)
-                {
-                    audio.PlayOneShot(Cursolmove);
-                    SEflag = true;
-                }
-            }
-            else
-            {
-                SEflag = false;
-            }
-
-            if ((Input.GetAxis("Vertical") != 1 && Input.GetAxis("Vertical") != -1 && Input.GetAxis("Vertical2") != 1 && Input.GetAxis("Vertical2") != -1 && Input.GetButton("A")) || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
-            {
-                if (Result._MenuNumber != 0)
-                {
-                    if (SEflag == false)
+                    //Debug.Log("第一関門突破");
+                    if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
                     {
-                        audio.PlayOneShot(Decision);
-                        SEflag = true;
-
-
-                        DecisionFlag = true;
+                        if (SEflag == false)
+                        {
+                            //Debug.Log("音が鳴るはず");
+                            audio.PlayOneShot(Cursolmove);
+                            SEflag = true;
+                        }
                     }
-
-                }
-            }
-
-            if (Result._MenuNumber == 0) //モード選択のところにカーソルがある時
-            {
-                if ((!Input.GetButton("A") && Input.GetAxis("Horizontal") == 1) || (!Input.GetButton("A") && Input.GetAxis("Horizontal2") == 1) || (!Input.GetButton("A") && Input.GetAxis("Horizontal") == -1) || (!Input.GetButton("A") && Input.GetAxis("Horizontal2") == -1))
-                {
-                    if (SEflag2 == false)
+                    else if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == 1))
                     {
-                        audio.PlayOneShot(Cursolmove);
-                        SEflag2 = true;
+                        if (SEflag == false)
+                        {
+                            //Debug.Log("音が鳴るはず");
+                            audio.PlayOneShot(Cursolmove);
+                            SEflag = true;
+                        }
+                    }
+                    else if ((Input.GetAxis("Vertical") != 1 && Input.GetAxis("Vertical") != -1 && Input.GetAxis("Vertical2") != 1 && Input.GetAxis("Vertical2") != -1 && Input.GetButton("A")) || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
+                    {
+                        switch (Count)
+                        {
+                            case 0:
+                                if (SEflag == false)
+                                {
+                                    Count++;
+                                    audio.PlayOneShot(Decision);
+                                    SEflag = true;
+                                }
+                                break;
+                            case 1:
+                                if (SEflag == false)
+                                {
+                                    DecisionFlag = true;
+                                    Debug.Log("音なるはず");
+                                    audio.PlayOneShot(Decision);
+                                    SEflag = true;
+                                }
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        SEflag = false;
                     }
                 }
-                else
-                {
-                    SEflag2 = false;
-                }
+
 
             }
 
@@ -91,5 +99,7 @@ public class ResultSE : MonoBehaviour
 
 
     }
+    
 }
+
 

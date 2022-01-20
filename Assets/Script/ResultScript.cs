@@ -16,6 +16,7 @@ public class ResultScript : MonoBehaviour
 
     bool PushScene;
     bool ShowMenu; //メニュー表示フラグ
+    public bool _showMenu {get { return ShowMenu; } }
     /**/
 
     /*カーソル移動に必要なもの*/
@@ -39,7 +40,7 @@ public class ResultScript : MonoBehaviour
     float MaxOpacity; //透明度の分割数
     /**/
 
-    /*フェードインに必要なもの*/
+    /*フェードアウトに必要なもの*/
     public GameObject FadePanel;
     Image _FadePanel;
     float FadeOpacity;
@@ -48,6 +49,9 @@ public class ResultScript : MonoBehaviour
     /**/
 
     bool push_scene;
+    public bool _push_scene {get{ return push_scene; } }
+
+    bool LoadFlg;
 
     // Start is called before the first frame update
     void Start()
@@ -73,6 +77,7 @@ public class ResultScript : MonoBehaviour
         FadeMaxOpacity = 100;
 
         push_scene = false;
+        LoadFlg = false;
     }
 
     // Update is called once per frame
@@ -120,10 +125,7 @@ public class ResultScript : MonoBehaviour
                 FadeFlg = true;
             }
         }
-        else
-        {
-            
-        }
+        
         _FadePanel.color = new Color(0, 0, 0, FadeOpacity / FadeMaxOpacity);
     }
     private void _ShowMenu()
@@ -163,16 +165,12 @@ public class ResultScript : MonoBehaviour
     }
     private void LoadObject()
     {
-        //Cursor = GameObject.Find("Cursor");
-        _Cursor = Cursor.GetComponent<RectTransform>();
-
-        //Retry = GameObject.Find("Retry");
-        //BacktoTitle = GameObject.Find("BacktoTitle");
-
-        _Retry = Retry.GetComponent<Text>();
-        _BacktoTitle = BacktoTitle.GetComponent<Text>();
-
-        
+        if(LoadFlg == false)
+        {
+            _Cursor = Cursor.GetComponent<RectTransform>();
+            _Retry = Retry.GetComponent<Text>();
+            _BacktoTitle = BacktoTitle.GetComponent<Text>();
+        }
     }
 
     private void CursorMove()
