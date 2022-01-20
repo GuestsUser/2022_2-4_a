@@ -264,8 +264,8 @@ public class Titlemenu : MonoBehaviour
         Decision = true;
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
 
-        //SceneManager.LoadScene("Game");
-        SceneManager.LoadScene("Result");
+        SceneManager.LoadScene("Game");
+        //SceneManager.LoadScene("Result");
         MenuNumber = 0;
         ModeNumber = 0;
         //Time.timeScale = 1;
