@@ -76,14 +76,22 @@ public class Titlemenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(ModeNumber);
+        //Debug.Log(ModeNumber);
+        CursorMove();
 
+
+
+
+    }
+
+    private void CursorMove()
+    {
         if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
         {
             if (pushFlag == false)
             {
                 pushFlag = true;
-                
+
                 if (++MenuNumber > 2) MenuNumber = 0;   //カーソルが一番下から一番上にくるように
             }
         }
@@ -101,75 +109,121 @@ public class Titlemenu : MonoBehaviour
             pushFlag = false;
         }
 
+        //抜けた場所
+        MenuNumberManager();
+
+
+        switch (ModeNumber)
+        {
+            case 0: //ひとりモード
+                if (plusFlag == true) //1が右、2が左→1が左、2が右
+                {
+                    Mode2rect.localPosition = Vector3.Lerp(Mode2rect.localPosition, Goal[2], 8f * Time.deltaTime);
+                    Mode1rect.localPosition = Vector3.Lerp(Mode1rect.localPosition, Goal[1], 8f * Time.deltaTime);
+
+                }
+                if (minusFlag == true) //1が右、2が左→1が左、2が右
+                {
+                    Mode2rect.localPosition = Vector3.Lerp(Mode2rect.localPosition, Goal[0], 8f * Time.deltaTime);
+                    Mode1rect.localPosition = Vector3.Lerp(Mode1rect.localPosition, Goal[1], 8f * Time.deltaTime);
+
+                }
+
+                break;
+            case 1: //通信対戦モード
+                if (plusFlag == true)
+                {
+
+                    Mode1rect.localPosition = Vector3.Lerp(Mode1rect.localPosition, Goal[2], 8f * Time.deltaTime);
+                    Mode2rect.localPosition = Vector3.Lerp(Mode2rect.localPosition, Goal[1], 8f * Time.deltaTime);
+                }
+                if (minusFlag == true)
+                {
+
+                    Mode1rect.localPosition = Vector3.Lerp(Mode1rect.localPosition, Goal[0], 8f * Time.deltaTime);
+                    Mode2rect.localPosition = Vector3.Lerp(Mode2rect.localPosition, Goal[1], 8f * Time.deltaTime);
+                }
+                break;
+        }
+    }
+    private void Side_Scroll()
+    {
+        if (Input.GetAxis("Horizontal") == 1 || Input.GetAxis("Horizontal2") == 1) //右
+        {
+            if (pushFlag2 == false)
+            {
+                pushFlag2 = true;
+                plusFlag = true;
+                if (minusFlag == true)
+                {
+                    minusFlag = false;
+                }
+                Debug.Log("右に入力されました");
+                if (++ModeNumber > 1) ModeNumber = 0;
+                if (ModeNumber == 1)
+                {
+                    Mode2rect.localPosition = new Vector3(-375, 0, 0);//左から登場させるため左に移動させる
+                }
+                else if (ModeNumber == 0)
+                {
+                    Mode1rect.localPosition = new Vector3(-375, 0, 0);//左から登場させるため左に移動させる
+                }
+            }
+
+        }
+        else if (Input.GetAxis("Horizontal") == -1 || Input.GetAxis("Horizontal2") == -1) //左
+        {
+            if (pushFlag2 == false)
+            {
+                pushFlag2 = true;
+                minusFlag = true;
+                if (plusFlag == true)
+                {
+                    plusFlag = false;
+                }
+                Debug.Log("左に入力されました");
+                if (--ModeNumber < 0) ModeNumber = 1;
+                if (ModeNumber == 1)
+                {
+                    Mode2rect.localPosition = new Vector3(375, 0, 0);//左から登場させるため左に移動させる
+                }
+                else if (ModeNumber == 0)
+                {
+                    Mode1rect.localPosition = new Vector3(375, 0, 0);//左から登場させるため左に移動させる
+                }
+            }
+
+        }
+        else
+        {
+            pushFlag2 = false;
+        }
+    }
+    private void MenuNumberManager()
+    {
         switch (MenuNumber)
         {
             case 0: //モード選択の位置
                 _start.color = new Color(0, 0, 0, 1);
                 _end.color = new Color(0, 0, 0, 1);
 
-                _Mode1.color = new Color(1,1,1,1);
+                _Mode1.color = new Color(1, 1, 1, 1);
                 _Mode2.color = new Color(1, 1, 1, 1);
 
                 rect.localPosition = new Vector3(0, -80, 0);
                 arrowanim();
-                
+
                 /*モード選択*/
-                if (Input.GetAxis("Horizontal") == 1 || Input.GetAxis("Horizontal2") == 1) //右
-                {
-                    if(pushFlag2 == false)
-                    {
-                        pushFlag2 = true;
-                        plusFlag = true;
-                        if (minusFlag == true)
-                        {
-                            minusFlag = false;
-                        }
-                        Debug.Log("右に入力されました");
-                        if (++ModeNumber > 1) ModeNumber = 0;
-                        if(ModeNumber == 1)
-                        {
-                            Mode2rect.localPosition = new Vector3(-375, 0, 0);//左から登場させるため左に移動させる
-                        }
-                        else if (ModeNumber == 0)
-                        {
-                            Mode1rect.localPosition = new Vector3(-375, 0, 0);//左から登場させるため左に移動させる
-                        }
-                    }
-                    
-                }
-                else if (Input.GetAxis("Horizontal") == -1 || Input.GetAxis("Horizontal2") == -1) //左
-                {
-                    if(pushFlag2 == false)
-                    {
-                        pushFlag2 = true;
-                        minusFlag = true;
-                        if(plusFlag == true)
-                        {
-                            plusFlag = false;
-                        }
-                        Debug.Log("左に入力されました");
-                        if (--ModeNumber < 0) ModeNumber = 1;
-                        if (ModeNumber == 1)
-                        {
-                            Mode2rect.localPosition = new Vector3(375, 0, 0);//左から登場させるため左に移動させる
-                        }
-                        else if (ModeNumber == 0)
-                        {
-                            Mode1rect.localPosition = new Vector3(375, 0, 0);//左から登場させるため左に移動させる
-                        }
-                    }
-                    
-                }
-                else
-                {
-                    pushFlag2 = false;
-                }
+
+                //横スクロール
+                Side_Scroll(); //モード選択の横スクロール処理
+
                 /*モード選択*/
 
                 //memo 左xPos:-375 真ん中:xPos0 右xPos:375
                 break;
             case 1: //スタート
-                _start.color = new Color(1,1,1,1);
+                _start.color = new Color(1, 1, 1, 1);
                 _end.color = new Color(0, 0, 0, 1);
 
                 _Mode1.color = new Color(0, 0, 0, 1);
@@ -201,46 +255,14 @@ public class Titlemenu : MonoBehaviour
                 break;
 
         }
-        switch (ModeNumber)
-        {
-            case 0: //ひとりモード
-                if (plusFlag == true) //1が右、2が左→1が左、2が右
-                {
-                    Mode2rect.localPosition = Vector3.Lerp(Mode2rect.localPosition, Goal[2], 8f * Time.deltaTime);
-                    Mode1rect.localPosition = Vector3.Lerp(Mode1rect.localPosition, Goal[1], 8f * Time.deltaTime);
-                    
-                }
-                if (minusFlag == true) //1が右、2が左→1が左、2が右
-                {
-                    Mode2rect.localPosition = Vector3.Lerp(Mode2rect.localPosition, Goal[0], 8f * Time.deltaTime);
-                    Mode1rect.localPosition = Vector3.Lerp(Mode1rect.localPosition, Goal[1], 8f * Time.deltaTime);
-
-                }
-                
-                break;
-            case 1: //通信対戦モード
-                if (plusFlag == true)
-                {
-                    
-                    Mode1rect.localPosition = Vector3.Lerp(Mode1rect.localPosition, Goal[2], 8f * Time.deltaTime);
-                    Mode2rect.localPosition = Vector3.Lerp(Mode2rect.localPosition, Goal[1], 8f * Time.deltaTime);
-                }
-                if (minusFlag == true)
-                {
-
-                    Mode1rect.localPosition = Vector3.Lerp(Mode1rect.localPosition, Goal[0], 8f * Time.deltaTime);
-                    Mode2rect.localPosition = Vector3.Lerp(Mode2rect.localPosition, Goal[1], 8f * Time.deltaTime);
-                }
-                break;
-        }
-
     }
 
     private IEnumerator ChangeCoroutine() //シーンチェンジ用
     {
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
 
-        SceneManager.LoadScene("Game");
+        //SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Result");
         MenuNumber = 0;
         ModeNumber = 0;
         //Time.timeScale = 1;
