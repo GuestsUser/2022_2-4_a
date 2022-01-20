@@ -40,6 +40,8 @@ public class Titlemenu : MonoBehaviour
     bool plusFlag = false; //右横スクロール用
     bool minusFlag = false; //左横スクロール用
 
+    bool Decision; //決定を押した
+
     /*色変える時に必要*/
     Text _Mode1;
     Text _Mode2;
@@ -71,17 +73,19 @@ public class Titlemenu : MonoBehaviour
 
         Mode1rect.localPosition = new Vector3(0, 0, 0);
         Mode2rect.localPosition = new Vector3(-375, 0, 0);
+
+        Decision = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Debug.Log(ModeNumber);
-        CursorMove();
-
-
-
-
+        if (Decision == false)
+        {
+            CursorMove();
+        }
+        
     }
 
     private void CursorMove()
@@ -109,9 +113,7 @@ public class Titlemenu : MonoBehaviour
             pushFlag = false;
         }
 
-        //抜けた場所
         MenuNumberManager();
-
 
         switch (ModeNumber)
         {
@@ -259,6 +261,7 @@ public class Titlemenu : MonoBehaviour
 
     private IEnumerator ChangeCoroutine() //シーンチェンジ用
     {
+        Decision = true;
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
 
         //SceneManager.LoadScene("Game");
@@ -269,6 +272,7 @@ public class Titlemenu : MonoBehaviour
     }
     private IEnumerator EndCoroutine()
     {
+        Decision = true;
         yield return new WaitForSecondsRealtime(1.5f);
         Application.Quit();
 

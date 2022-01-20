@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleSE : MonoBehaviour
+public class ResultSE : MonoBehaviour
 {
     public AudioClip Cursolmove; //カーソル移動
     public AudioClip Decision; //決定音
@@ -10,15 +10,17 @@ public class TitleSE : MonoBehaviour
     bool SEflag; //効果音を鳴らせるフラグ
     bool SEflag2; //効果音を鳴らせるフラグ
     bool DecisionFlag;
-    AudioSource audio;//後々使う(音量調整など)
+    AudioSource audio; //後々使う(音量調整など)
 
-    Titlemenu Title; //Titlemenuの変数を持ってくるよう
-
+    public GameObject Retry;
+    ResultScript Result; //Resultメニューで扱う変数を持ってくるため
+    
     // Start is called before the first frame update
     void Start()
     {
         audio = GetComponent<AudioSource>();
-        Title = GetComponent<Titlemenu>();
+        Retry = GameObject.Find("RetryScript");
+        Result = Retry.GetComponent<ResultScript>();
         SEflag = false;
         SEflag2 = false;
         DecisionFlag = false;
@@ -27,7 +29,7 @@ public class TitleSE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(DecisionFlag == false)
+        if (DecisionFlag == false)
         {
 
             //Debug.Log(Title._MenuNumber);
@@ -54,21 +56,21 @@ public class TitleSE : MonoBehaviour
 
             if ((Input.GetAxis("Vertical") != 1 && Input.GetAxis("Vertical") != -1 && Input.GetAxis("Vertical2") != 1 && Input.GetAxis("Vertical2") != -1 && Input.GetButton("A")) || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
             {
-                if (Title._MenuNumber != 0)
+                if (Result._MenuNumber != 0)
                 {
                     if (SEflag == false)
                     {
                         audio.PlayOneShot(Decision);
                         SEflag = true;
 
-                    
+
                         DecisionFlag = true;
                     }
-                    
+
                 }
             }
 
-            if (Title._MenuNumber == 0) //モード選択のところにカーソルがある時
+            if (Result._MenuNumber == 0) //モード選択のところにカーソルがある時
             {
                 if ((!Input.GetButton("A") && Input.GetAxis("Horizontal") == 1) || (!Input.GetButton("A") && Input.GetAxis("Horizontal2") == 1) || (!Input.GetButton("A") && Input.GetAxis("Horizontal") == -1) || (!Input.GetButton("A") && Input.GetAxis("Horizontal2") == -1))
                 {
@@ -87,6 +89,7 @@ public class TitleSE : MonoBehaviour
 
         }
 
-        
+
     }
 }
+

@@ -20,6 +20,7 @@ public class ResultScript : MonoBehaviour
 
     /*カーソル移動に必要なもの*/
     public static int MenuNumber = 0; //メニュー番号
+    public int _MenuNumber { get { return MenuNumber; } }
     public GameObject Cursor; //カーソルのポジション取得に必要
     bool CursorFlg; //
     bool Decision; //決定押したかどうか
@@ -46,6 +47,8 @@ public class ResultScript : MonoBehaviour
     float FadeMaxOpacity;
     /**/
 
+    bool push_scene;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +71,8 @@ public class ResultScript : MonoBehaviour
 
         FadeOpacity = 0;
         FadeMaxOpacity = 100;
+
+        push_scene = false;
     }
 
     // Update is called once per frame
@@ -172,62 +177,65 @@ public class ResultScript : MonoBehaviour
 
     private void CursorMove()
     {
-        if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
+        if (push_scene == false)
         {
-            if (CursorFlg == false)
+            if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
             {
-                CursorFlg = true;
+                if (CursorFlg == false)
+                {
+                    CursorFlg = true;
 
-                if (++MenuNumber > 1) MenuNumber = 0;   //カーソルが一番下から一番上にくるように
+                    if (++MenuNumber > 1) MenuNumber = 0;   //カーソルが一番下から一番上にくるように
+                }
             }
-        }
-        else if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == 1))
-        {
-            if (CursorFlg == false)
+            else if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == 1))
             {
-                CursorFlg = true;
-                if (--MenuNumber < 0) MenuNumber = 1;    //カーソルが一番上から一番下にくるように
+                if (CursorFlg == false)
+                {
+                    CursorFlg = true;
+                    if (--MenuNumber < 0) MenuNumber = 1;    //カーソルが一番上から一番下にくるように
 
+                }
             }
-        }
-        else
-        {
-            CursorFlg = false;
-        }
+            else
+            {
+                CursorFlg = false;
+            }
 
-        switch (MenuNumber)
-        {
-            case 0:
-                _Retry.color = new Color(1,1,1,1);
-                _BacktoTitle.color = new Color(0,0,0,1);
+            switch (MenuNumber)
+            {
+                case 0:
+                    _Retry.color = new Color(1, 1, 1, 1);
+                    _BacktoTitle.color = new Color(0, 0, 0, 1);
 
-                _Cursor.localPosition = new Vector3(0,15,0);
-                
-                if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
-                {
-                    if (Decision == false)
+                    _Cursor.localPosition = new Vector3(0, 15, 0);
+
+                    if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
                     {
-                        StartCoroutine("RetryCoroutine");
-                        Decision = true;
+                        if (Decision == false)
+                        {
+                            StartCoroutine("RetryCoroutine");
+                            Decision = true;
+                        }
                     }
-                }
-                break;
+                    break;
 
-            case 1:
-                _Retry.color = new Color(0, 0, 0, 1);
-                _BacktoTitle.color = new Color(1, 1, 1, 1);
+                case 1:
+                    _Retry.color = new Color(0, 0, 0, 1);
+                    _BacktoTitle.color = new Color(1, 1, 1, 1);
 
-                _Cursor.localPosition = new Vector3(0, -45, 0);
+                    _Cursor.localPosition = new Vector3(0, -45, 0);
 
-                if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
-                {
-                    if (Decision == false)
+                    if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
                     {
-                        StartCoroutine("BacktoTitleCoroutine");
-                        Decision = true;
+                        if (Decision == false)
+                        {
+                            StartCoroutine("BacktoTitleCoroutine");
+                            Decision = true;
+                        }
                     }
-                }
-                break;
+                    break;
+            }
         }
     }
     //private void Finalize()
@@ -237,13 +245,19 @@ public class ResultScript : MonoBehaviour
     //}
     private IEnumerator RetryCoroutine()
     {
+        push_scene = true;
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
         SceneManager.LoadScene("Game");
+        push_scene = false;
+        //Decision = false;
     }
 
     private IEnumerator BacktoTitleCoroutine()
     {
+        push_scene = true;
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
         SceneManager.LoadScene("Title");
+        push_scene = false;
+        //Decision = false;
     }
 }
