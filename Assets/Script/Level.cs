@@ -207,7 +207,7 @@ public class Level : MonoBehaviour
                 }
 
                 time = 0;/*制限時間をリセット*/
-                time_interval = 0;
+                time_interval = 0;/*インターバルタイムをリセット*/
 
 
             }
