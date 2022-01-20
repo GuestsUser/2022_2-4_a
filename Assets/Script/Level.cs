@@ -61,24 +61,57 @@ public class Level : MonoBehaviour
         260  /* 数合わせ */   
     };
 
-    public int level = 0;           /*レベルアップ変数*/
-    public int runcount = 0;        /*往復回数を記録する変数*/
-    public int otetuki = 0;         /*失敗したときの変数(上限は２)*/
-    public float time = 0f;         /*音源を再生してから数える変数*/
-    public float timemax = 5f;
-    public bool StartGame = true;  /*ゲーム中かどうかを入れる(プレーヤー担当の人よろしく💛)*/
+    /*次の音階がなるまでのインターバル*/
+    public float[] level_interval =
+    {
 
-    //audioはそのままの名前だとコンポーネントのaudioと被って隠されるとかなんとかだったから念の為変える
+        1f,        /*Level1*/
+        1.75f,     /*Level2*/
+        0.9f,      /*Level3*/
+        0.9f,      /*Level4*/
+        0.8f,      /*Level5*/
+        0.8f,      /*Level6*/
+        0.7f,      /*Level7*/
+        0.7f,      /*Level8*/
+        0.6f,      /*Level9*/
+        0.6f,      /*Level10*/
+        0.5f,      /*Level11*/
+        0.5f,      /*Level12*/
+        0.4f,      /*Level13*/
+        0.4f,      /*Level14*/
+        0.3f,      /*Level15*/
+        0.3f,      /*Level16*/
+        0.2f,      /*Level17*/
+        0.2f,      /*Level18*/
+        0.1f,      /*Level19*/
+        0.1f,      /*Level20*/
+        0.1f,      /*Level21*/
+        0.1f,      /*Level22*/
+
+    };
+    /*次の音階がなるまでのインターバル*/
+
+    /*シャトルランのシステム変数*/
+    public int level = 0;               /*シャトルランのレベルアップ変数*/
+    public int runcount = 0;            /*ゴール回数を記録する変数*/
+    public int otetuki = 0;             /*失敗したときの変数(上限は２)*/
+    public float time = 0f;             /*制限時間の変数*/
+    public float timemax = 5f;          /*5秒後にスタートさせる変数*/
+    public float time_interval = 0f;    /*次の音階が鳴るまでのインターバル変数*/
+    public bool StartGame = true;       /*ゲーム中かどうかを入れる(プレーヤー担当の人よろしく💛)*/
+    /*シャトルランのシステム変数*/
+
+    /*audioはそのままの名前だとコンポーネントのaudioと被って隠されるとかなんとかだったから念の為変える*/
     public AudioSource audio_player;            /*シャトルラン音源を使用するオーディオソースを入れる*/
     [SerializeField] AudioClip clip;     /*シャトルラン音源*/
 
     /*プレーヤー情報を入れる変数*/
-    public GameObject run;
-    public float playerx = 0f;
-    public float maxposition = 0f;
-    public float position = 0f;
-    public float max = 19f;
-    Vector3 playerposition;
+    public GameObject run;          /*プレーヤのオブジェクトを入れる*/
+    public float playerx = 0f;      /*スタート時の位置*/
+    public float maxposition = 0f;  /*ゴール時の位置*/
+    public float position = 0f;     /*プレーヤが進んだ距離*/
+    public float max = 19f;         /*ゴールまでの距離*/
+    Vector3 playerposition;         /*プレーヤのPositionを入れる*/
     /*プレーヤー情報を入れる変数*/
 
 
@@ -96,10 +129,13 @@ public class Level : MonoBehaviour
         StartGame = true;
         /*動作テスト用*/
 
+        /*スタート時のプレーヤポジションを取得*/
         playerposition = run.transform.position;
         playerx = playerposition.x;
         maxposition = playerposition.x;
-        max = 19f;
+        /*スタート時のプレーヤポジションを取得*/
+
+        max = 19f;/*ゴールまでの距離*/
 
     }
 
@@ -129,16 +165,26 @@ public class Level : MonoBehaviour
         if (audio_player.isPlaying && StartGame)
         {
 
+            /*5秒後に数える処理*/
             if (timemax < 0f)
             {
 
-                time += Time.deltaTime;
+                /*インターバルが終わってから数える*/
+                time_interval += Time.deltaTime;
+                if (time_interval >= level_interval[level])
+                {
+
+                    time += Time.deltaTime;
+
+                }
+                /*インターバルが終わってから数える*/
 
             }
             else
             {
                 timemax -= Time.deltaTime;
             }
+            /*5秒後に数える処理*/
 
         }
 
@@ -148,76 +194,88 @@ public class Level : MonoBehaviour
         {
 
             audio_player.UnPause();
+            /*制限時間を過ぎたら*/
             if (time >= level_time[level])
             {
 
+                /*制限時間がすぎるまでにゴールできなかったら*/
                 if (position < max && time > level_time[level])
                 {
 
-
-                    otetuki++;
+                    otetuki++;/*お手付きプラス1*/
 
                 }
 
-                time = 0;
+                time = 0;/*制限時間をリセット*/
+                time_interval = 0;
 
 
             }
+            /*制限時間を過ぎたら*/
+
+            /*ゴール回数が一定数を超えたら*/
             if (runcount >= level_count[level] && time < level_time[level] && level < 22 && otetuki < 2)
             {
 
-                level++;
+                level++;/*シャトルランのレベルを上げる*/
 
             }
-            else if (otetuki >= 2)
+            else if (otetuki >= 2)/*お手付きを連続で2回やったら*/
             {
 
 
-                audio_player.Stop();
-                StartGame = false;
+                audio_player.Stop();/*音源を停止*/
+
+                StartGame = false;/*ゲームフラグをファルスに*/
 
                 /*ゲームオーバースクリプトを編集*/
-                var = GameOver_flg.GetComponent<Game_Over>();   //ゲームオーバースクリプトを空箱に代入
-                var.game_over_flg = true;   //ゲームオーバーフラグを真に変更
+                var = GameOver_flg.GetComponent<Game_Over>();   /*ゲームオーバースクリプトを空箱に代入*/
+                var.game_over_flg = true;   /*ゲームオーバーフラグを真に変更*/
 
             }
 
         }
-        else
+        else/*ゲーム途中でポーズが入ると*/
         {
 
-            //audio.Pause();
+            //audio_player.Pause();/*音源を一時停止*/
 
         }
 
 
         /*座標取得*/
-        if (StartGame)
+        if (StartGame)/*ゲーム中のみ動作する*/
         {
 
+            /*プレーヤのx軸を取得*/
             playerposition = run.transform.position;
             playerx = playerposition.x;
-            if (maxposition > playerx)
+
+            /*プレーヤーのスタート位置と進んだ位置を比較*/
+            if (maxposition > playerx)/*スタート位置よりも進んだ位置のほうが大きかったら*/
             {
 
-                position = maxposition - playerx;
+                position = maxposition - playerx;/*進んだ距離に引いた値を入れる*/
 
             }
-            else if (maxposition < playerx)
+            else if (maxposition < playerx)/*スタート位置よりも進んだ位置のほうが小さかったら*/
             {
 
-                position = playerx - maxposition;
+                position = playerx - maxposition;/*進んだ距離に引いた値を入れる*/
 
             }
+            /*プレーヤーのスタート位置と進んだ位置を比較*/
 
+            /*プレーヤが制限時間までにゴールしたら*/
             if (position >= max && time <= level_time[level])
             {
-                position = 0;
-                maxposition = playerposition.x;
-                runcount++;
-                otetuki = 0;
+                position = 0;/*距離をリセット*/
+                maxposition = playerposition.x;/*スタート位置にプレーヤのx軸を入れる*/
+                runcount++;/*ゴールカウントプラス1*/
+                otetuki = 0;/*お手付きをリセット*/
 
             }
+            /*プレーヤが制限時間までにゴールしたら*/
 
         }
         /*座標取得*/
