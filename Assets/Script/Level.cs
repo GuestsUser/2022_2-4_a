@@ -81,6 +81,12 @@ public class Level : MonoBehaviour
     Vector3 playerposition;
     /*プレーヤー情報を入れる変数*/
 
+
+    /*ゲームオーバー用変数*/
+    public GameObject GameOver_flg;
+    Game_Over var;
+    /*ゲームオーバー用変数*/
+
     // Start is called before the first frame update
     void Start()
     {
@@ -169,6 +175,10 @@ public class Level : MonoBehaviour
 
                 audio_player.Stop();
                 StartGame = false;
+
+                /*ゲームオーバースクリプトを編集*/
+                var = GameOver_flg.GetComponent<Game_Over>();   //ゲームオーバースクリプトを空箱に代入
+                var.game_over_flg = true;   //ゲームオーバーフラグを真に変更
 
             }
 
