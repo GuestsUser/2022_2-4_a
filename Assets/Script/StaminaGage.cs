@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//重要な欠陥として、スタミナの管理がpoint依存ではなくなってしまったのでpoint参照でスタミナの値の取得は可能だが書き換えると正常に機能しなくなる問題が……
+//管理はplayerで行ってる、スタミナ減少量ですらそこで管理してるのでスタミナ量すら飾りという有様……
+
 public class StaminaGage : MonoBehaviour
 {
     [SerializeField] private float MaxGage;//ゲージ最大量、これを増やしてもゲージは伸びない、減るのが遅くなる事で大容量化する

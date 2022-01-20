@@ -170,7 +170,7 @@ MonoBehaviour:
   time: 0
   timemax: 5
   StartGame: 1
-  audio: {fileID: 8088721036431148272}
+  audio_player: {fileID: 8088721036431148272}
   clip: {fileID: 8300000, guid: d3f2f709357004f45adca19cb5e849c7, type: 3}
   run: {fileID: 0}
   playerx: 0

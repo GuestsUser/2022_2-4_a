@@ -68,11 +68,12 @@ public class Level : MonoBehaviour
     public float timemax = 5f;
     public bool StartGame = true;  /*ゲーム中かどうかを入れる(プレーヤー担当の人よろしく💛)*/
 
-    public AudioSource audio;            /*シャトルラン音源を使用するオーディオソースを入れる*/
+    //audioはそのままの名前だとコンポーネントのaudioと被って隠されるとかなんとかだったから念の為変える
+    public AudioSource audio_player;            /*シャトルラン音源を使用するオーディオソースを入れる*/
     [SerializeField] AudioClip clip;     /*シャトルラン音源*/
 
     /*プレーヤー情報を入れる変数*/
-    public GameObject run = GameObject.Find("player");
+    public GameObject run;
     public float playerx = 0f;
     public float maxposition = 0f;
     public float position = 0f;
@@ -83,9 +84,9 @@ public class Level : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audio.clip = clip;
+        audio_player.clip = clip;
         /*動作テスト用*/
-        audio.Play();/*再生_test用*/
+        audio_player.Play();/*再生_test用*/
         StartGame = true;
         /*動作テスト用*/
 
@@ -99,11 +100,12 @@ public class Level : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (!StartGame)
-        //{
-        //    StartGame = true;
-        //}
-        //StartGame = true;/*プレーヤー担当の人ここにゲーム中のフラグを入れて*/
+        if (otetuki > 1 || Time.timeScale <= 0)
+        {
+            StartGame = false;
+            audio_player.Pause();//fixedupdateはtimescaleが0になると実行されないのでfixedupdateに停止処理が入ってると恐らく止まらないからこちらに移動した
+        }
+        else { StartGame = true; }/*プレーヤー担当の人ここにゲーム中のフラグを入れて*/
 
     }
 
@@ -118,7 +120,7 @@ public class Level : MonoBehaviour
         //time += Time.deltaTime;
         /*動作テスト*/
 
-        if (audio.isPlaying && StartGame)
+        if (audio_player.isPlaying && StartGame)
         {
 
             if (timemax < 0f)
@@ -139,7 +141,7 @@ public class Level : MonoBehaviour
         if (StartGame)
         {
 
-            audio.UnPause();
+            audio_player.UnPause();
             if (time >= level_time[level])
             {
 
@@ -165,7 +167,7 @@ public class Level : MonoBehaviour
             {
 
 
-                audio.Stop();
+                audio_player.Stop();
                 StartGame = false;
 
             }
@@ -174,7 +176,7 @@ public class Level : MonoBehaviour
         else
         {
 
-            audio.Pause();
+            //audio.Pause();
 
         }
 

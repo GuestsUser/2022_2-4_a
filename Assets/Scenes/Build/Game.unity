@@ -1115,6 +1115,12 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: New Text
+--- !u!82 &1173434606 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8088721036431148272, guid: 8dd67519586d2d241a8eaf60605c2a0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1204332601}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1204332601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1126,6 +1132,10 @@ PrefabInstance:
       propertyPath: run
       value: 
       objectReference: {fileID: 1241137541}
+    - target: {fileID: 312370291, guid: 8dd67519586d2d241a8eaf60605c2a0d, type: 3}
+      propertyPath: audio_player
+      value: 
+      objectReference: {fileID: 1173434606}
     - target: {fileID: 8088721036190046519, guid: 8dd67519586d2d241a8eaf60605c2a0d,
         type: 3}
       propertyPath: m_LocalPosition.x
