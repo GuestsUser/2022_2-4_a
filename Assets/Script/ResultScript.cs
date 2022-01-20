@@ -236,17 +236,13 @@ public class ResultScript : MonoBehaviour
             }
         }
     }
-    //private void Finalize()
-    //{
-    //    FadeFlg = false;
-    //    Opacity = 0;
-    //}
     private IEnumerator RetryCoroutine()
     {
         push_scene = true;
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
         SceneManager.LoadScene("Game");
         push_scene = false;
+        ShowMenu = false;
         //Decision = false;
     }
 
@@ -256,6 +252,6 @@ public class ResultScript : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
         SceneManager.LoadScene("Title");
         push_scene = false;
-        //Decision = false;
+        ShowMenu = false;
     }
 }

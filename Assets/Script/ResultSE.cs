@@ -41,20 +41,24 @@ public class ResultSE : MonoBehaviour
                 //Debug.Log("第一関門突破");
                 if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
                 {
-                    if (SEflag == false)
+                    if(Result._push_scene == false)
                     {
-                        //Debug.Log("音が鳴るはず");
-                        audio.PlayOneShot(Cursolmove);
-                        SEflag = true;
+                        if (SEflag == false)
+                        {
+                            audio.PlayOneShot(Cursolmove);
+                            SEflag = true;
+                        }
                     }
                 }
                 else if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == 1))
                 {
-                    if (SEflag == false)
+                    if (Result._push_scene == false)
                     {
-                        //Debug.Log("音が鳴るはず");
-                        audio.PlayOneShot(Cursolmove);
-                        SEflag = true;
+                        if (SEflag == false)
+                        {
+                            audio.PlayOneShot(Cursolmove);
+                            SEflag = true;
+                        }
                     }
                 }
                 else if ((Input.GetAxis("Vertical") != 1 && Input.GetAxis("Vertical") != -1 && Input.GetAxis("Vertical2") != 1 && Input.GetAxis("Vertical2") != -1 && Input.GetButton("A")) || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
@@ -88,10 +92,10 @@ public class ResultSE : MonoBehaviour
 
 
         }
-        DecisionFlag = false;
-    
-
-
+        else
+        {
+            DecisionFlag = false;
+        }
     }
     
 }

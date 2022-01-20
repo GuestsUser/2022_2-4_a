@@ -28,13 +28,8 @@ public class PauseSE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_pause._push_scene == true)//他のシーンに遷移した時
-        {
-            DecisionFlag = false;
-        }
-        else
-        {
-            if (Time.timeScale == 0)//タイムスケールが0で
+        
+            if (_pause._showMenu == true)
             {
                 if (DecisionFlag == false) //決定ボタンを押していない間
                 {
@@ -81,4 +76,4 @@ public class PauseSE : MonoBehaviour
 
         }
     }
-}
+

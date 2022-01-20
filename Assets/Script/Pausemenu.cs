@@ -41,6 +41,7 @@ public class Pausemenu : MonoBehaviour
     float FadeMaxOpacity;
 
     bool ShowMenu;
+    public bool _showMenu { get { return ShowMenu; } }
     /**/
 
     /*ロード処理*/

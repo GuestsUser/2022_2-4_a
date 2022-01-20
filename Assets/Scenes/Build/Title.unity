@@ -410,7 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cursolmove: {fileID: 8300000, guid: a5e7f093d9c1e7b449b40b950d102fdb, type: 3}
-  Decision: {fileID: 8300000, guid: a5e7f093d9c1e7b449b40b950d102fdb, type: 3}
+  Decision: {fileID: 8300000, guid: 4332027e4765e974980221460d38919c, type: 3}
 --- !u!1 &108224258
 GameObject:
   m_ObjectHideFlags: 0
