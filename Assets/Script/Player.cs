@@ -7,9 +7,12 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject stamina;
     [SerializeField] private GameObject speed;
 
+
+    private Vector3 old_pos;
     // Start is called before the first frame update
     void Start()
     {
+        old_pos = gameObject.transform.position;
         StartCoroutine("StaminaControl");
     }
 
@@ -50,13 +53,15 @@ public class Player : MonoBehaviour
             //}
             //count = 0;//時間リセット
 
-            if(speed.GetComponent<SpeedGage>().RendaCount > 0)
+            bool repeat = speed.GetComponent<SpeedGage>().RendaCount > 0;//連打してるとtrue
+
+            if (repeat && old_pos != gameObject.transform.position)//位置を止められているとスタミナも減らない
             {
                 healing_wait = 0;
                 if (count < del_limit) { count += Time.deltaTime; } 
                 else { count = del_limit; }
             }
-            else
+            else if(!repeat)//連打してない状態でここにきたら通す
             {
                 if (count > 0)
                 {
@@ -69,6 +74,7 @@ public class Player : MonoBehaviour
             point = 90 / del_limit * count;//del_limitにcountが達する事で90となりcos(90)=0となり全てのポイントが破棄されるまでを滑らかに表現できる
             float mul = Mathf.Cos(point * Mathf.Deg2Rad);//cosカーブを使う事により時間が経過するほど加速度的に減少してゆく
             stamina.GetComponent<StaminaGage>().point = stamina_max * mul;
+            old_pos = gameObject.transform.position;
             yield return StartCoroutine("TimeStop");//時間停止中待機の命令で停止中はスタミナを操作しない
         }
     }
