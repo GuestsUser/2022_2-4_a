@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     public int Move = 0;    //速度調整
 
-    private bool stop_flg=false;//速くゴールした時のフラグ保持
+    public bool stop_flg=false;//速くゴールした時のフラグ保持
     private int old_run_count=0;//前フレームのゴールカウント、これが増えた瞬間をゴールとみなす
 
     private void Start()
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    Vector3 force = new Vector3(Move * SG.GageAmount, 0.0f, 0.0f);    // 力を設定
+                    Vector3 force = new Vector3(Move * SG.GageAmount + 1.0f, 0.0f, 0.0f);    // 力を設定
                     rb.AddForce(force - rb.velocity, ForceMode.Impulse);  // 力を加える
                 }
             }
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    Vector3 force = new Vector3(-Move * SG.GageAmount, 0.0f, 0.0f);    // 力を設定
+                    Vector3 force = new Vector3(-Move * SG.GageAmount - 1.0f, 0.0f, 0.0f);    // 力を設定
                     rb.AddForce(force - rb.velocity, ForceMode.Impulse);  // 力を加える
                 }
             }

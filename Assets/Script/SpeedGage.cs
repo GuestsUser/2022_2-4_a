@@ -19,6 +19,10 @@ public class SpeedGage : MonoBehaviour
 
     [SerializeField] Text[] texts = null;
 
+    //参照先
+    public PlayerController playercontroller;
+    public Level level;
+
     private void Start()
     {
         //Imageコンポーネントの設定
@@ -36,19 +40,23 @@ public class SpeedGage : MonoBehaviour
         texts[3].text = "isMashing" + isMashing;
         texts[4].text = "second: " + second;
 
-        //Aボタンを連打されたとき
-        if(Input.GetKeyDown("joystick button 0"))
-        //左クリックで連打されたとき
-        //if (Input.GetMouseButtonDown(0))
+        //カウントダウン中,待機中は連打できないようにする
+        if (playercontroller.stop_flg == false && level.timemax < 0f)
         {
-            //数えている状態にする
-            isCounting = true;
+            //Aボタンを連打されたとき
+            if (Input.GetKeyDown("joystick button 0"))
+            //左クリックで連打されたとき
+            //if (Input.GetMouseButtonDown(0))
+            {
+                //数えている状態にする
+                isCounting = true;
 
-            //秒数をリセット
-            second = 0f;
+                //秒数をリセット
+                second = 0f;
 
-            //連打数を1増加
-            RendaCount++;
+                //連打数を1増加
+                RendaCount++;
+            }
         }
 
         //数えているとき
