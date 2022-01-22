@@ -103,7 +103,7 @@ public class PauseSE : MonoBehaviour
                     
                 break;
             case 1:
-                    if (Input.GetButton("Start"))
+                    if (Input.GetButton("Start") || Input.GetButton("B"))
                     {
                         if (SEflag == false)
                         {
@@ -112,7 +112,7 @@ public class PauseSE : MonoBehaviour
                             audio.PlayOneShot(Cancel);
                             
                             Count = 0;
-                        SEflag = false;
+                            SEflag = false;
                         }
                     }
                 break;
