@@ -403,6 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cursolmove: {fileID: 8300000, guid: a5e7f093d9c1e7b449b40b950d102fdb, type: 3}
   Decision: {fileID: 8300000, guid: 4332027e4765e974980221460d38919c, type: 3}
+  Cancel: {fileID: 8300000, guid: 3ce9c0ec35b80ff4aa03bf41738fae36, type: 3}
   pause: {fileID: 171382632}
 --- !u!82 &171382636
 AudioSource:
@@ -1431,6 +1432,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BGMSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088721036190046521, guid: 8dd67519586d2d241a8eaf60605c2a0d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dd67519586d2d241a8eaf60605c2a0d, type: 3}

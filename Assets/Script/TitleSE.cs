@@ -54,8 +54,7 @@ public class TitleSE : MonoBehaviour
 
             if ((Input.GetAxis("Vertical") != 1 && Input.GetAxis("Vertical") != -1 && Input.GetAxis("Vertical2") != 1 && Input.GetAxis("Vertical2") != -1 && Input.GetButton("A")) || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
             {
-                if (Title._MenuNumber != 0)
-                {
+                
                     if (SEflag == false)
                     {
                         audio.PlayOneShot(Decision);
@@ -64,8 +63,6 @@ public class TitleSE : MonoBehaviour
                     
                         DecisionFlag = true;
                     }
-                    
-                }
             }
 
             if (Title._MenuNumber == 0) //モード選択のところにカーソルがある時

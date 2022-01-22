@@ -223,6 +223,12 @@ public class Titlemenu : MonoBehaviour
                 /*モード選択*/
 
                 //memo 左xPos:-375 真ん中:xPos0 右xPos:375
+                if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
+                {
+                    //pushScene = true;
+                    StartCoroutine(ChangeCoroutine());
+
+                }
                 break;
             case 1: //スタート
                 _start.color = new Color(1, 1, 1, 1);
@@ -234,8 +240,7 @@ public class Titlemenu : MonoBehaviour
                 rect.localPosition = new Vector3(0, -150, 0);
                 if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
                 {
-                    //pushScene = true;
-                    StartCoroutine(ChangeCoroutine());
+                    //StartCoroutine(ChangeCoroutine());
 
                 }
                 //Debug.Log("1");
@@ -264,6 +269,15 @@ public class Titlemenu : MonoBehaviour
         Decision = true;
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
 
+        switch (ModeNumber)
+        {
+            case 0:
+                SceneManager.LoadScene("Game");
+                break;
+            case 1:
+                SceneManager.LoadScene("Game");//とりあえず同じシーンにしているが別モードが実装出来たら変える
+                break;
+        }
         SceneManager.LoadScene("Game");
         //SceneManager.LoadScene("Result");
         MenuNumber = 0;
