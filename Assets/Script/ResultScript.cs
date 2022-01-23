@@ -166,7 +166,7 @@ public class ResultScript : MonoBehaviour
 
             if (time < easingTime)
             {
-                _Retrymenu.localScale = new Vector3((Easing.QuartOut(time, easingTime, 0, 1)), ((Easing.QuartOut(time, easingTime, 0, 1))), 1);
+                _Retrymenu.localScale = new Vector3((Easing.ExpOut(time, easingTime, 0, 1)), ((Easing.ExpOut(time, easingTime, 0, 1))), 1);
             }
             else
             {
