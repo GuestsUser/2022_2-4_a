@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ResultScript : MonoBehaviour
 {
-    //イージングテスト
+    //イージング
     [SerializeField]
     private Easingtype type;
     private float time = 0.0f;

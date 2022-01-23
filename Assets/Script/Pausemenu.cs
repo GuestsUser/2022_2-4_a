@@ -6,6 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class Pausemenu : MonoBehaviour
 {
+    //イージング
+    [SerializeField]
+    private Easingtype type;
+    private float time = 0.0f;
+    private float InTime = 0.0f;
+    private float easingTime = 2.0f;
+
+    bool PanelClose;
+
     /*ポーズメニュー表示*/
     public GameObject _PausePanel;
     public GameObject ReStart;
@@ -16,6 +25,8 @@ public class Pausemenu : MonoBehaviour
     bool push_scene; //現在何のシーンなのか　ひとりモードor通信モード
     public bool _push_scene { get { return push_scene; } }
     bool GameOver; //ゲームが終わっているのか続いているのか
+
+    RectTransform _pausepanel;
     /**/
 
     /*カーソルムーブ*/
@@ -52,6 +63,7 @@ public class Pausemenu : MonoBehaviour
     void Start()
     {
         _PausePanel.SetActive(false);
+        _pausepanel = _PausePanel.GetComponent<RectTransform>();
         GameOver = false;
         pushFlag = false;
         push_scene = false;
@@ -64,15 +76,24 @@ public class Pausemenu : MonoBehaviour
         ShowMenu = false;
 
         LoadFlg = false;
+        time = 0;
+        InTime = 0;
+        _pausepanel.localScale = new Vector3(0, 0, 1);
+        PanelClose = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(time);
+        EasOut();
         if (Time.timeScale == 0)
         {
             
             LoadObject();
+
+            
+
             FadeIN();
             if(push_scene == false)
             {
@@ -94,8 +115,13 @@ public class Pausemenu : MonoBehaviour
             {
                 if (Time.timeScale == 0)//タイムスケールが0で
                 {
+                    
+
+
                     if (Input.GetButton("B"))//Bボタンを押したら
                     {
+                        
+
                         if (pushFlag == false) //押されてないっていうステータスを
                         {
                             pushFlag = true; //押されたことにする
@@ -104,9 +130,17 @@ public class Pausemenu : MonoBehaviour
                             _FadePanel.color = new Color(0, 0, 0, 0);
                             ShowMenu = false;
                             FadeFlg = false;
-                            _PausePanel.SetActive(false);
+                            PanelClose = true;
+                            
+                            
+                            time = 0;
                         }
                     }
+                }
+                else if (Time.timeScale == 1 && PanelClose == true)
+                {
+                    EasIn();
+
                 }
 
                 if (Input.GetButton("Start")) //スタートボタン入力があったら
@@ -120,6 +154,7 @@ public class Pausemenu : MonoBehaviour
                         {
                             Time.timeScale = 0;
                             _PausePanel.SetActive(true);
+                            InTime = 0;
                             ShowMenu = true;
                         }
                         else
@@ -130,7 +165,8 @@ public class Pausemenu : MonoBehaviour
                             _FadePanel.color = new Color(0, 0, 0, 0);
                             ShowMenu = false;
                             FadeFlg = false;
-                            _PausePanel.SetActive(false);
+                            PanelClose = true;
+                            time = 0;
                         }
                     }
                 }
@@ -157,6 +193,9 @@ public class Pausemenu : MonoBehaviour
 
             FadePanel = GameObject.Find("FadePanel");
             _FadePanel = FadePanel.GetComponent<Image>();
+
+            
+            LoadFlg = true;
         }
     }
     private void CursorMove()
@@ -255,6 +294,58 @@ public class Pausemenu : MonoBehaviour
         }
 
         _FadePanel.color = new Color(0, 0, 0, FadeOpacity / FadeMaxOpacity);
+    }
+
+    private void EasOut()
+    {
+        if(ShowMenu == true)
+        {
+
+            //_pausepanel.localScale = new Vector3(0, 0, 1);
+            //イージング
+            time += 0.333333f / 3;
+
+            if (time < easingTime)
+            {
+                _pausepanel.localScale = new Vector3((Easing.ExpOut(time, easingTime, 0, 1)), ((Easing.ExpOut(time, easingTime, 0, 1))), 1);
+            }
+            else
+            {
+                _pausepanel.localScale = new Vector3(1, 1, 1);
+            }
+        }
+        else
+        {
+            //閉じるアニメーションが要らない場合これでok
+            //_pausepanel.localScale = new Vector3(0, 0, 1);
+        }
+    }
+    private void EasIn()
+    {
+        if (ShowMenu == false)
+        {
+            Debug.Log(InTime);
+            //Debug.Log(1 - (Easing.ExpOut(InTime, easingTime, 0, 1)));
+            //イージング
+            InTime += 0.333333f / 3;
+
+            if (InTime < easingTime)
+            {
+                _pausepanel.localScale = new Vector3(1-(Easing.ExpOut(InTime, easingTime, 0, 1)), 1-(Easing.ExpOut(InTime, easingTime, 0, 1)), 1);
+            }
+            else
+            {
+                _pausepanel.localScale = new Vector3(0, 0, 1);
+                PanelClose = true;
+
+                _PausePanel.SetActive(false);
+            }
+        }
+        else if(ShowMenu == true)
+        {
+            InTime = 0;
+            Debug.Log("通りました");
+        }
     }
     private IEnumerator RestartCoroutine() //シーンチェンジ用
     {

@@ -34,8 +34,8 @@ public class PauseSE : MonoBehaviour
     void Update()
     {
 
-        Debug.Log(_pause._showMenu);
-        Debug.Log(Count);
+        //Debug.Log(_pause._showMenu);
+        //Debug.Log(Count);
         if (_pause._showMenu == true)
         {
             if (DecisionFlag == false) //決定ボタンを押していない間
@@ -87,18 +87,13 @@ public class PauseSE : MonoBehaviour
             case 0:
                 if (_pause._showMenu == true)
                 {
-                    //if (Input.GetButton("Start"))
-                    //{
                         if (SEflag == false)
                         {
-                            
-                            Debug.Log("なるはず");
                             audio.PlayOneShot(Decision);
                             SEflag = true;
                             CancelFlg = true;
                             Count++;
                         }
-                    //}
                 }
                     
                 break;

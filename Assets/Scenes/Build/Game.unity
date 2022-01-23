@@ -369,6 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c417c08e6399c48837f6107bc66426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   _PausePanel: {fileID: 901578142}
   ReStart: {fileID: 61162657}
   Option: {fileID: 1469645371}
