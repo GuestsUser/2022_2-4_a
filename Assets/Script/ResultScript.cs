@@ -6,10 +6,21 @@ using UnityEngine.SceneManagement;
 
 public class ResultScript : MonoBehaviour
 {
+    //イージングテスト
+    [SerializeField]
+    private Easingtype type;
+    private float time = 0.0f;
+    private float easingTime = 1.0f;
+
+
+    //
+
     /*リトライメニューに必要なもの*/
     public GameObject Retrymenu;
     public GameObject Retry;
     public GameObject BacktoTitle;
+
+    RectTransform _Retrymenu;
 
     bool pushFlg;
     public bool _pushFlg { get{ return pushFlg; } }
@@ -17,6 +28,7 @@ public class ResultScript : MonoBehaviour
     bool PushScene;
     bool ShowMenu; //メニュー表示フラグ
     public bool _showMenu {get { return ShowMenu; } }
+    
     /**/
 
     /*カーソル移動に必要なもの*/
@@ -78,15 +90,21 @@ public class ResultScript : MonoBehaviour
 
         push_scene = false;
         LoadFlg = false;
+
+        time = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        
+        //time += (1 / 3);
+
+        //Debug.Log(MenuScaleX);
         TextBlinking(); //テキストの点滅
         FadeIN();
         _ShowMenu(); //リトライメニューの表示
-
     }
     private void TextBlinking()
     {
@@ -130,17 +148,31 @@ public class ResultScript : MonoBehaviour
     }
     private void _ShowMenu()
     {
+        
         if (ShowMenu == true)
         {
+            time += Time.deltaTime;
             CursorMove();
 
             /*↓リザルト画面をみたいと思う人が多ければ採用*/
             //if (Input.GetButton("B"))
             //{
             //    ShowMenu = false;
+            //    time = 0;
             //    Retrymenu.SetActive(false);
             //}
-            
+
+
+
+            if (time < easingTime)
+            {
+                _Retrymenu.localScale = new Vector3((Easing.QuartOut(time, easingTime, 0, 1)), ((Easing.QuartOut(time, easingTime, 0, 1))), 1);
+            }
+            else
+            {
+                _Retrymenu.localScale = new Vector3(1, 1, 1);
+            }
+                
         }
 
         if (Input.GetButton("A"))
@@ -153,10 +185,9 @@ public class ResultScript : MonoBehaviour
                     ShowMenu = true;
                     LoadObject();
                     Retrymenu.SetActive(true);
-
+                    _Retrymenu.localScale = new Vector3(0, 0, 1);
                 }
             }
-
         }
         else
         {
@@ -170,6 +201,8 @@ public class ResultScript : MonoBehaviour
             _Cursor = Cursor.GetComponent<RectTransform>();
             _Retry = Retry.GetComponent<Text>();
             _BacktoTitle = BacktoTitle.GetComponent<Text>();
+            _Retrymenu = Retrymenu.GetComponent<RectTransform>();
+            LoadFlg = true;
         }
     }
 
@@ -243,7 +276,8 @@ public class ResultScript : MonoBehaviour
         SceneManager.LoadScene("Game");
         push_scene = false;
         ShowMenu = false;
-        //Decision = false;
+
+        time = 0;
     }
 
     private IEnumerator BacktoTitleCoroutine()
@@ -253,5 +287,14 @@ public class ResultScript : MonoBehaviour
         SceneManager.LoadScene("Title");
         push_scene = false;
         ShowMenu = false;
+        time = 0;
     }
+
+
+    //public static float QuartOut(float t, float totaltime, float min, float max)
+    //{
+    //    max -= min;
+    //    t = t / totaltime - 1;
+    //    return -max * (t * t * t * t - 1) + min;
+    //}
 }
