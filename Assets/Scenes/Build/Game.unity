@@ -1636,6 +1636,7 @@ MonoBehaviour:
   level: {fileID: 574290802}
   STG: {fileID: 546600860}
   Move: 5
+  stop_flg: 0
 --- !u!114 &1241137547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2337,6 +2338,16 @@ PrefabInstance:
       propertyPath: Gage
       value: 
       objectReference: {fileID: 1506296224}
+    - target: {fileID: 2270385174853717746, guid: 54b4893047f4f21459cbcc8788eb6af6,
+        type: 3}
+      propertyPath: playercontroller
+      value: 
+      objectReference: {fileID: 1241137546}
+    - target: {fileID: 2270385174853717746, guid: 54b4893047f4f21459cbcc8788eb6af6,
+        type: 3}
+      propertyPath: level
+      value: 
+      objectReference: {fileID: 574290802}
     - target: {fileID: 2270385174853717747, guid: 54b4893047f4f21459cbcc8788eb6af6,
         type: 3}
       propertyPath: m_Name
