@@ -33,7 +33,7 @@ public class Pausemenu : MonoBehaviour
     public static int MenuNumber = 0; //メニュー番号
     public int _MenuNumber { get { return MenuNumber; } }
     public GameObject Cursor; //カーソルのポジション取得に必要
-    bool CursorFlg;
+    bool CursorFlg; //入力長押し対策
     bool Decision; //決定を押したか押してないか
 
     RectTransform _Cursor; //Cursor動かすのに必要
@@ -59,6 +59,11 @@ public class Pausemenu : MonoBehaviour
     bool LoadFlg;
     /**/
 
+    /*オプションメニュ～に必要なもの*/
+    //bool OptionFlg;
+    public bool _OptionFlg;
+    int CancelCount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,29 +85,35 @@ public class Pausemenu : MonoBehaviour
         InTime = 0;
         _pausepanel.localScale = new Vector3(0, 0, 1);
         PanelClose = false;
+
+        _OptionFlg = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(time);
-        EasOut();
-        if (Time.timeScale == 0)
+        if (_OptionFlg == false)
         {
-            
-            LoadObject();
-
-            
-
-            FadeIN();
-            if(push_scene == false)
+            //Debug.Log(time);
+            EasOut();
+            if (Time.timeScale == 0)
             {
-                CursorMove();
+
+                LoadObject();
+
+
+
+                FadeIN();
+                if (push_scene == false)
+                {
+                    CursorMove();
+                }
+
             }
-            
+            //Debug.Log("Updateは正常に動いています");
+            Pause();
         }
-        //Debug.Log("Updateは正常に動いています");
-        Pause();
+        
     }
 
 
@@ -115,27 +126,26 @@ public class Pausemenu : MonoBehaviour
             {
                 if (Time.timeScale == 0)//タイムスケールが0で
                 {
-                    
-
-
-                    if (Input.GetButton("B"))//Bボタンを押したら
+                    if(CancelCount == 0) //オプションメニュー表示からBを押すとポーズも消えてしまう問題対策
                     {
-                        
-
-                        if (pushFlag == false) //押されてないっていうステータスを
+                        if (Input.GetButton("B"))//Bボタンを押したら
                         {
-                            pushFlag = true; //押されたことにする
-                            Time.timeScale = 1;
-                            FadeOpacity = 0;
-                            _FadePanel.color = new Color(0, 0, 0, 0);
-                            ShowMenu = false;
-                            FadeFlg = false;
-                            PanelClose = true;
-                            
-                            
-                            time = 0;
+                            if (pushFlag == false) //押されてないっていうステータスを
+                            {
+                                pushFlag = true; //押されたことにする
+                                Time.timeScale = 1;
+                                FadeOpacity = 0;
+                                _FadePanel.color = new Color(0, 0, 0, 0);
+                                ShowMenu = false;
+                                FadeFlg = false;
+                                PanelClose = true;
+
+
+                                time = 0;
+                            }
                         }
                     }
+                    
                 }
                 else if (Time.timeScale == 1 && PanelClose == true)
                 {
@@ -157,7 +167,7 @@ public class Pausemenu : MonoBehaviour
                             InTime = 0;
                             ShowMenu = true;
                         }
-                        else
+                        else if(pushFlag == true && CancelCount == 0)
                         {
                             pushFlag = true;
                             Time.timeScale = 1;
@@ -230,7 +240,7 @@ public class Pausemenu : MonoBehaviour
                 _Option.color = new Color(0, 0, 0, 1);
                 _ReTitle.color = new Color(0,0,0,1);
 
-                _Cursor.localPosition = new Vector3(0, 55, 0);
+                _Cursor.localPosition = new Vector3(0, 15, 0);
 
                 if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
                 {
@@ -247,13 +257,17 @@ public class Pausemenu : MonoBehaviour
                 _Option.color = new Color(1, 1, 1, 1);
                 _ReTitle.color = new Color(0, 0, 0, 1);
 
-                _Cursor.localPosition = new Vector3(0, -5, 0);
+                _Cursor.localPosition = new Vector3(0, -45, 0);
                 
                 if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
                 {
                     if (Decision == false)
                     {
-                        //Decision = true;
+                        Decision = true;
+                        //オプションフラグ
+                        _OptionFlg = true;
+                        CancelCount = 1;
+
                     }
                 }
                 break;
@@ -263,7 +277,7 @@ public class Pausemenu : MonoBehaviour
                 _Option.color = new Color(0, 0, 0, 1);
                 _ReTitle.color = new Color(1, 1, 1, 1); 
 
-                _Cursor.localPosition = new Vector3(0, -65, 0);
+                _Cursor.localPosition = new Vector3(0, -105, 0);
 
                 if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
                 {
@@ -308,6 +322,7 @@ public class Pausemenu : MonoBehaviour
             if (time < easingTime)
             {
                 _pausepanel.localScale = new Vector3((Easing.ExpOut(time, easingTime, 0, 1)), ((Easing.ExpOut(time, easingTime, 0, 1))), 1);
+                
             }
             else
             {
@@ -324,7 +339,7 @@ public class Pausemenu : MonoBehaviour
     {
         if (ShowMenu == false)
         {
-            Debug.Log(InTime);
+            //Debug.Log(InTime);
             //Debug.Log(1 - (Easing.ExpOut(InTime, easingTime, 0, 1)));
             //イージング
             InTime += 0.333333f / 3;

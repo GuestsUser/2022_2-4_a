@@ -33,60 +33,59 @@ public class PauseSE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //Debug.Log(_pause._showMenu);
-        //Debug.Log(Count);
-        if (_pause._showMenu == true)
+        if (_pause._OptionFlg == false)
         {
-            if (DecisionFlag == false) //決定ボタンを押していない間
+            if (_pause._showMenu == true)
             {
-                if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
+                if (DecisionFlag == false) //決定ボタンを押していない間
                 {
-                    if (SEflag == false)
+                    if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
                     {
-                        audio.PlayOneShot(Cursolmove);
-                        SEflag = true;
-                    }
-                }
-                else if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == 1))
-                {
-                    if (SEflag == false)
-                    {
-                        audio.PlayOneShot(Cursolmove);
-                        SEflag = true;
-                    }
-                }
-                else if ((Input.GetAxis("Vertical") != 1 && Input.GetAxis("Vertical") != -1 && Input.GetAxis("Vertical2") != 1 && Input.GetAxis("Vertical2") != -1 && Input.GetButton("A")) || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
-                {
-                    if (SEflag == false) //Aボタンを押した時の処理
-                    {
-                        if (_pause._MenuNumber != 1) //真ん中のオプションは未実装
+                        if (SEflag == false)
                         {
+                            audio.PlayOneShot(Cursolmove);
+                            SEflag = true;
+                        }
+                    }
+                    else if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (!Input.GetButton("A") && Input.GetAxis("Vertical2") == 1))
+                    {
+                        if (SEflag == false)
+                        {
+                            audio.PlayOneShot(Cursolmove);
+                            SEflag = true;
+                        }
+                    }
+                    else if ((Input.GetAxis("Vertical") != 1 && Input.GetAxis("Vertical") != -1 && Input.GetAxis("Vertical2") != 1 && Input.GetAxis("Vertical2") != -1 && Input.GetButton("A")) || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
+                    {
+                        if (SEflag == false) //Aボタンを押した時の処理
+                        {
+                            //if (_pause._MenuNumber != 1) //真ん中のオプションは未実装
+                            //{
                             DecisionFlag = true;
                             audio.PlayOneShot(Decision);
                             SEflag = true;
+                            //}
+
                         }
-                            
                     }
-                }
-                else if(!Input.anyKey)
-                {
-                    SEflag = false;
+                    else if (!Input.anyKey)
+                    {
+                        SEflag = false;
+                    }
+
+
+
                 }
 
-                
+
 
             }
 
-
-
-        }
-
-        switch (Count)
-        {
-            case 0:
-                if (_pause._showMenu == true)
-                {
+            switch (Count)
+            {
+                case 0:
+                    if (_pause._showMenu == true)
+                    {
                         if (SEflag == false)
                         {
                             audio.PlayOneShot(Decision);
@@ -94,10 +93,10 @@ public class PauseSE : MonoBehaviour
                             CancelFlg = true;
                             Count++;
                         }
-                }
-                    
-                break;
-            case 1:
+                    }
+
+                    break;
+                case 1:
                     if (Input.GetButton("Start") || Input.GetButton("B"))
                     {
                         if (SEflag == false)
@@ -105,14 +104,14 @@ public class PauseSE : MonoBehaviour
                             CancelFlg = false;
                             SEflag = true;
                             audio.PlayOneShot(Cancel);
-                            
+
                             Count = 0;
                             SEflag = false;
                         }
                     }
-                break;
+                    break;
+            }
         }
-
     }
 }
 
