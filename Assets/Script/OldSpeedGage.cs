@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class SpeedGage : MonoBehaviour
+public class OldSpeedGage : MonoBehaviour
 {
     [SerializeField] Image Gage = null;    //ゲージ
     public float GageAmount;   //ゲージの量
@@ -22,10 +22,6 @@ public class SpeedGage : MonoBehaviour
     //参照先
     public PlayerController playercontroller;
     public Level level;
-
-    [SerializeField] float Speed_up_vol = 45;//スピードゲージ最大を90とした時、1秒のゲージ加算量
-    public float speed_up_vol { get { return Speed_up_vol; } }//Speed_up_volはこれを使うと他スクリプトから変数のように引っ張って来る事ができる
-    private float sin_val = 0;//ゲージ量を決定する為の値
 
     private void Start()
     {
@@ -104,9 +100,13 @@ public class SpeedGage : MonoBehaviour
             {
                 texts[5].text = "連打している";
 
-                if (sin_val + speed_up_vol * Time.deltaTime >= 90) { sin_val = 90; }//ゲージを増やす
-                else { sin_val += speed_up_vol * Time.deltaTime; }//ゲージをマックスのままにする
-                GageAmount = Mathf.Sin(sin_val * Mathf.Deg2Rad);
+                //ゲージを増やす
+                GageAmount += 0.2f * Time.deltaTime;
+                //ゲージが満タンになったら
+                if (GageAmount >= 1f) 
+                    //ゲージをマックスのままにする
+                    GageAmount = 1f;
+
                 Gage.fillAmount = GageAmount;
             }
         }
@@ -123,9 +123,11 @@ public class SpeedGage : MonoBehaviour
     //ゲージを減らす関数
     void DecreaseGage()
     {
-        if (sin_val - speed_up_vol * Time.deltaTime <= 0) { sin_val = 0; }
-        else { sin_val -= speed_up_vol * Time.deltaTime; }
-        GageAmount = Mathf.Sin(sin_val * Mathf.Deg2Rad);
+        GageAmount -= 0.4f * Time.deltaTime;
+        //ゲージが0以下になったら
+        if (GageAmount <= 0f)
+            //ゲージを0にする
+            GageAmount = 0f;
 
         Gage.fillAmount = GageAmount;
     }

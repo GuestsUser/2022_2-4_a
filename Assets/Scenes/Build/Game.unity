@@ -2349,6 +2349,11 @@ PrefabInstance:
       propertyPath: level
       value: 
       objectReference: {fileID: 574290802}
+    - target: {fileID: 2270385174853717746, guid: 54b4893047f4f21459cbcc8788eb6af6,
+        type: 3}
+      propertyPath: Speed_up_vol
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 2270385174853717747, guid: 54b4893047f4f21459cbcc8788eb6af6,
         type: 3}
       propertyPath: m_Name
