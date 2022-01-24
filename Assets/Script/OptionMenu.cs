@@ -33,24 +33,20 @@ public class OptionMenu : MonoBehaviour
     private float InTime = 0.0f;
     private float easingTime = 20.0f;
 
+    /*ロード用*/
+    bool LoadFlg;
+
     //オプションメニューの隠れている位置 X(490)
     //出てくるときのイメージ オプションを押したら右から登場
 
     // Start is called before the first frame update
     void Start()
     {
-        ShowFlg = false;
-
-        OptionPanel = GameObject.Find("OptionPanel");
-        _OptionPanel = OptionPanel.GetComponent<RectTransform>();
-
-        menu = GameObject.Find("menu"); //ポーズメニューを移動させるのに使う
-        _menu = menu.GetComponent<RectTransform>();
-
-        Cursor = GameObject.Find("cursor2");
-        _Cursor = Cursor.GetComponent<RectTransform>();
-
         pause = GetComponent<Pausemenu>();
+        ShowFlg = false;
+        LoadFlg = false;
+
+
     }
 
     // Update is called once per frame
@@ -61,6 +57,10 @@ public class OptionMenu : MonoBehaviour
 
     void ShowOption()
     {
+        if(pause._showMenu == true)
+        {
+            LoadObject();
+        }
         if (pause._OptionFlg == true)
         {
             EasOut();
@@ -74,12 +74,31 @@ public class OptionMenu : MonoBehaviour
         }
         else
         {
-            EasIN();
+            //EasIN();
             Outtime = 0;
         }
         void CursorMove()
         {
 
+        }
+
+        void LoadObject()
+        {
+            if(LoadFlg == false)
+            {
+                OptionPanel = GameObject.Find("OptionPanel");
+                _OptionPanel = OptionPanel.GetComponent<RectTransform>();
+
+                menu = GameObject.Find("menu"); //ポーズメニューを移動させるのに使う
+                _menu = menu.GetComponent<RectTransform>();
+
+                Cursor = GameObject.Find("cursor2");
+                _Cursor = Cursor.GetComponent<RectTransform>();
+
+                
+                LoadFlg = true;
+            }
+            
         }
 
         void EasOut() //登場時
