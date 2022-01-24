@@ -53,15 +53,14 @@ public class Player : MonoBehaviour
             //}
             //count = 0;//時間リセット
 
-            bool repeat = speed.GetComponent<SpeedGage>().RendaCount > 0;//連打してるとtrue
 
-            if (repeat && old_pos != gameObject.transform.position)//位置を止められているとスタミナも減らない
+            if (speed.GetComponent<SpeedGage>().RendaCount > 0 && old_pos != gameObject.transform.position)//位置を止められているとスタミナも減らない
             {
                 healing_wait = 0;
                 if (count < del_limit) { count += Time.deltaTime; } 
                 else { count = del_limit; }
             }
-            else if(!repeat)//連打してない状態でここにきたら通す
+            else
             {
                 if (count > 0)
                 {
