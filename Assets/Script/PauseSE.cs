@@ -36,7 +36,7 @@ public class PauseSE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(_option.PauseCancelSE);
+        
 
         if (Count == 2)
         {
@@ -44,16 +44,6 @@ public class PauseSE : MonoBehaviour
             {
                 audio.PlayOneShot(Cancel);
                 Count -= 1;
-                //_option.OnCancelSE = false;
-                //if (SEflag == false)
-                //{
-                //    CancelFlg = false;
-                //    SEflag = true;
-
-                //    Count -= 1;
-                //    DecisionFlag = false;
-                //    //Debug.Log("aa");
-                //}
             }
         }
 
@@ -77,9 +67,10 @@ public class PauseSE : MonoBehaviour
 
         }
 
+        Debug.Log(DecisionFlag);
+
         if (_pause._OptionFlg == false)
         {
-            //Count = 1;
             if (_pause._showMenu == true)
             {
                 if (DecisionFlag == false) //決定ボタンを押していない間
@@ -100,15 +91,19 @@ public class PauseSE : MonoBehaviour
                             SEflag = true;
                         }
                     }
-                    else if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetButton("A"))
+                    else if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && !Input.GetButton("B") && Input.GetButton("A"))
                     {
                         if (SEflag == false) //Aボタンを押した時の処理
                         {
-                            DecisionFlag = true;
+                            
                             Count++;
                             Debug.Log("入りました");
                             audio.PlayOneShot(Decision);
                             SEflag = true;
+                            if (_pause._MenuNumber != 1)
+                            {
+                                DecisionFlag = true;
+                            }
                         }
                     }
                     else if (!Input.anyKey)
