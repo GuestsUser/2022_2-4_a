@@ -33,6 +33,15 @@ public class OptionMenu : MonoBehaviour
     Text _SE; //効果音
     /**/
 
+    /*スライダームーブ*/
+    public GameObject Slider1; 
+    RectTransform _Slider1;
+    public GameObject Slider2;
+    RectTransform _Slider2;
+
+    //SoundVolumu Volume;
+    /**/
+
     /*イージング*/
     private float Outtime = 0.0f;
     private float InTime = 0.0f;
@@ -46,6 +55,9 @@ public class OptionMenu : MonoBehaviour
     /*SE用*/
     public bool OnCancelSE;
     public bool PauseCancelSE;
+
+    float SliderX1;
+    float SliderX2;
 
     //オプションメニューの隠れている位置 X(490)
     //出てくるときのイメージ オプションを押したら右から登場
@@ -64,12 +76,14 @@ public class OptionMenu : MonoBehaviour
         PauseCancelSE = false;
 
         
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(SoundVolumu.BGMVol);
+        Debug.Log(SoundVolumu.SEVol);
         ShowOption();
     }
 
@@ -88,6 +102,7 @@ public class OptionMenu : MonoBehaviour
         {
             EasOut();
             CursorMove();
+            SliderMove();
             InTime = 0;
 
             if (!Input.GetButton("A") && Input.GetButton("Start") || Input.GetButton("B"))//Bボタンを押したら
@@ -102,6 +117,7 @@ public class OptionMenu : MonoBehaviour
         {
             EasIN();
             Outtime = 0;
+            MenuNumber = 0;
         }
     }
     void CursorMove()
@@ -144,7 +160,40 @@ public class OptionMenu : MonoBehaviour
                 break;
         }
     }
+    
+    void SliderMove() //音量調整
+    {
+        switch (MenuNumber)//スライダーの移動
+        {
+            case 0:
+                if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetAxis("Horizontal") == 1 || Input.GetAxis("Horizontal2") == 1) //右
+                {
+                    if (++SoundVolumu.BGMVol > 100) SoundVolumu.BGMVol = 100;
+                }
+                else if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetAxis("Horizontal") == -1 || Input.GetAxis("Horizontal2") == -1)
+                {
+                    if (--SoundVolumu.BGMVol < 0) SoundVolumu.BGMVol = 0;
+                }
+                _Slider1.localPosition = new Vector3(SliderX1 + (SoundVolumu.BGMVol*3), _Slider1.localPosition.y, _Slider1.localPosition.z);
+                _Slider2.localPosition = new Vector3(SliderX2 + (SoundVolumu.SEVol * 3), _Slider2.localPosition.y, _Slider2.localPosition.z);
+                break;
 
+            case 1:
+                if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetAxis("Horizontal") == 1 || Input.GetAxis("Horizontal2") == 1) //右
+                {
+                    if (++SoundVolumu.SEVol > 100) SoundVolumu.SEVol = 100;
+                }
+                else if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetAxis("Horizontal") == -1 || Input.GetAxis("Horizontal2") == -1)
+                {
+                    if (--SoundVolumu.SEVol < 0) SoundVolumu.SEVol = 0;
+                }
+                _Slider2.localPosition = new Vector3(SliderX2 + (SoundVolumu.SEVol * 3), _Slider2.localPosition.y, _Slider2.localPosition.z);
+                _Slider1.localPosition = new Vector3(SliderX1 + (SoundVolumu.BGMVol * 3), _Slider1.localPosition.y, _Slider1.localPosition.z);
+                break;
+        }
+        
+
+    }
     void LoadObject()
     {
         if (LoadFlg == false)
@@ -163,6 +212,14 @@ public class OptionMenu : MonoBehaviour
             SE = GameObject.Find("SE");
             _BGM = BGM.GetComponent<Text>();
             _SE = SE.GetComponent<Text>();
+
+            Slider1 = GameObject.Find("BGMHandle");
+            _Slider1 = Slider1.GetComponent<RectTransform>();
+            Slider2 = GameObject.Find("SEHandle");
+            _Slider2 = Slider2.GetComponent<RectTransform>();
+
+            SliderX1 = _Slider1.localPosition.x;
+            SliderX2 = _Slider2.localPosition.x;
 
             LoadFlg = true;
         }

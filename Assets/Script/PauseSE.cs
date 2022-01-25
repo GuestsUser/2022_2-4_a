@@ -36,7 +36,8 @@ public class PauseSE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(SEflag);
+        audio.volume = SoundVolumu.SEVol/100;
+        Debug.Log(SoundVolumu.SEVol / 100);
 
         if (Count == 2)
         {
