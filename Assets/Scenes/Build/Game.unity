@@ -2381,6 +2381,10 @@ PrefabInstance:
       propertyPath: GameOver_flg
       value: 
       objectReference: {fileID: 870576459}
+    - target: {fileID: 312370291, guid: 8dd67519586d2d241a8eaf60605c2a0d, type: 3}
+      propertyPath: max
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8088721036190046519, guid: 8dd67519586d2d241a8eaf60605c2a0d,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -33,6 +33,7 @@ public class Level : MonoBehaviour
         3.79f /* Level_22 Count248 ～ 263 */
         
     };
+    /*シャトルランのルール上の秒数：参照元：https://newbal.wiki.fc2.com/wiki/20m%E3%82%B7%E3%83%A3%E3%83%88%E3%83%AB%E3%83%A9%E3%83%B3%E3%81%AE%E9%80%9F%E3%81%95 */
 
     /*往復回数との比較変数*/
     public int[] level_count =
@@ -60,6 +61,7 @@ public class Level : MonoBehaviour
         248, /* Level_22 */
         260  /* 数合わせ */   
     };
+    /*往復回数との比較変数*/
 
     /*次の音階がなるまでのインターバル*/
     public float[] level_interval =
@@ -95,6 +97,7 @@ public class Level : MonoBehaviour
     public int level = 0;               /*シャトルランのレベルアップ変数*/
     public int runcount = 0;            /*ゴール回数を記録する変数*/
     public int otetuki = 0;             /*失敗したときの変数(上限は２)*/
+    public int otetuki_interval = 0;    /*往復したときにお手付きをリセットする変数*/
     public float time = 0f;             /*制限時間の変数*/
     public float timemax = 5f;          /*5秒後にスタートさせる変数*/
     public float time_interval = 0f;    /*次の音階が鳴るまでのインターバル変数*/
@@ -110,10 +113,9 @@ public class Level : MonoBehaviour
     public float playerx = 0f;      /*スタート時の位置*/
     public float maxposition = 0f;  /*ゴール時の位置*/
     public float position = 0f;     /*プレーヤが進んだ距離*/
-    public float max = 19f;         /*ゴールまでの距離*/
+    public float max = 20f;         /*ゴールまでの距離*/
     Vector3 playerposition;         /*プレーヤのPositionを入れる*/
     /*プレーヤー情報を入れる変数*/
-
 
     /*ゲームオーバー用変数*/
     public GameObject GameOver_flg;
@@ -135,17 +137,17 @@ public class Level : MonoBehaviour
         maxposition = playerposition.x;
         /*スタート時のプレーヤポジションを取得*/
 
-        max = 19f;/*ゴールまでの距離*/
 
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (otetuki > 1 || Time.timeScale <= 0)
         {
             StartGame = false;
-            audio_player.Pause();//fixedupdateはtimescaleが0になると実行されないのでfixedupdateに停止処理が入ってると恐らく止まらないからこちらに移動した
+            audio_player.Pause();/*fixedupdateはtimescaleが0になると実行されないのでfixedupdateに停止処理が入ってると恐らく止まらないからこちらに移動した*/
         }
         else { StartGame = true; }/*プレーヤー担当の人ここにゲーム中のフラグを入れて*/
 
@@ -162,6 +164,7 @@ public class Level : MonoBehaviour
         //time += Time.deltaTime;
         /*動作テスト*/
 
+        /*音源が鳴っていてゲーム中のみ動作*/
         if (audio_player.isPlaying && StartGame)
         {
 
@@ -188,12 +191,12 @@ public class Level : MonoBehaviour
 
         }
 
-
         /*ゲーム中のみ音源が再生される*/
         if (StartGame)
         {
 
-            audio_player.UnPause();
+            audio_player.UnPause();/*ゲーム中は音源が停止されない*/
+ 
             /*制限時間を過ぎたら*/
             if (time >= level_time[level])
             {
@@ -202,13 +205,19 @@ public class Level : MonoBehaviour
                 if (position < max && time > level_time[level])
                 {
 
-                    otetuki++;/*お手付きプラス1*/
+                    /*お手付きと往復回数が一緒だったら*/
+                    if (otetuki_interval == otetuki)
+                    {
+
+                        otetuki++;/*お手付きプラス1*/
+
+                    }
 
                 }
 
                 time = 0;/*制限時間をリセット*/
                 time_interval = 0;/*インターバルタイムをリセット*/
-
+                otetuki_interval = 0;/*お手付きインターバルをリセット*/
 
             }
             /*制限時間を過ぎたら*/
@@ -272,7 +281,15 @@ public class Level : MonoBehaviour
                 position = 0;/*距離をリセット*/
                 maxposition = playerposition.x;/*スタート位置にプレーヤのx軸を入れる*/
                 runcount++;/*ゴールカウントプラス1*/
-                otetuki = 0;/*お手付きをリセット*/
+                otetuki_interval++;/*往復回数をプラス1*/
+
+                /*往復回数がお手付きより大きくなったら*/
+                if (otetuki_interval > otetuki)
+                {
+
+                    otetuki = 0;/*お手付きをリセット*/
+
+                }
 
             }
             /*プレーヤが制限時間までにゴールしたら*/
