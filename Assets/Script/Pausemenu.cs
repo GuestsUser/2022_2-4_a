@@ -92,7 +92,6 @@ public class Pausemenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(_OptionFlg);
         if (_OptionFlg == false)
         {
             //Debug.Log(time);

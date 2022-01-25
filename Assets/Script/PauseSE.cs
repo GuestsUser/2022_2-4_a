@@ -36,7 +36,7 @@ public class PauseSE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Count);
+        Debug.Log(_option.PauseCancelSE);
 
         if (Count == 2)
         {
@@ -44,7 +44,7 @@ public class PauseSE : MonoBehaviour
             {
                 audio.PlayOneShot(Cancel);
                 Count -= 1;
-                _option.OnCancelSE = false;
+                //_option.OnCancelSE = false;
                 //if (SEflag == false)
                 //{
                 //    CancelFlg = false;
@@ -126,38 +126,37 @@ public class PauseSE : MonoBehaviour
 
             switch (Count)
             {
-                case 0:
+                case 0: //ポーズメニュー開く前
                     if (_pause._showMenu == true)
                     {
-                        
                         if (SEflag == false)
                         {
-                            
                             audio.PlayOneShot(Decision);
                             SEflag = true;
                             CancelFlg = true;
                             Count++;
                         }
                     }
-
                     break;
-                case 1:
+                case 1: //ポーズメニュー開いた状態
                     if (Input.GetButton("Start") || Input.GetButton("B"))
                     {
-                        if (SEflag == false)
+                        if(_option.PauseCancelSE == false)
                         {
-                            CancelFlg = false;
-                            SEflag = true;
-                            audio.PlayOneShot(Cancel);
-
-                            Count = 0;
+                            if (SEflag == false)
+                            {
+                                CancelFlg = false;
+                                SEflag = true;
+                                audio.PlayOneShot(Cancel);
+                                Debug.Log("通りました");
+                                Count = 0;
+                            }
                         }
+                        
                     }
                     if(_pause._OptionFlg == true)
                     {
-                        Debug.Log("こここない？");
-                        
-                        if(Input.GetAxis("Vertical") ==0 && Input.GetAxis("Vertical2") == 0 && Input.GetButton("A"))
+                        if(Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetButton("A"))
                         if (SEflag == false)
                         {
                             SEflag = true;
@@ -167,27 +166,26 @@ public class PauseSE : MonoBehaviour
                     
 
                     break;
-                case 2:
-                    if(_option.OnCancelSE == false)
-                    {
-                        if (Input.GetButton("Start") || Input.GetButton("B"))
-                        {
-                            if (SEflag == false)
-                            {
-                                CancelFlg = false;
-                                SEflag = true;
-                                audio.PlayOneShot(Cancel);
-                                Count--;
+                //case 2:
+                //    if(_option.OnCancelSE == false)
+                //    {
+                //        if (Input.GetButton("Start") || Input.GetButton("B"))
+                //        {
+                //            if (SEflag == false)
+                //            {
+                //                CancelFlg = false;
+                //                SEflag = true;
+                //                audio.PlayOneShot(Cancel);
+                //                Count--;
+                //            }
+                //        }
+                //    }
+                    //else
+                    //{
+                    //    _option.OnCancelSE = false;
+                    //}
 
-                            }
-                        }
-                    }
-                    else
-                    {
-                        _option.OnCancelSE = false;
-                    }
-
-                    break;
+                    //break;
             }
         }
     }

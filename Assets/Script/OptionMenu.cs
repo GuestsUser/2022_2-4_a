@@ -40,6 +40,7 @@ public class OptionMenu : MonoBehaviour
 
     /*SE用*/
     public bool OnCancelSE;
+    public bool PauseCancelSE;
 
     //オプションメニューの隠れている位置 X(490)
     //出てくるときのイメージ オプションを押したら右から登場
@@ -55,6 +56,7 @@ public class OptionMenu : MonoBehaviour
 
         CursorFlg = false;
         OnCancelSE = false;
+        PauseCancelSE = false;
     }
 
     // Update is called once per frame
@@ -69,6 +71,10 @@ public class OptionMenu : MonoBehaviour
         {
             LoadObject();
         }
+        else
+        {
+            PauseCancelSE = false;
+        }
         if (pause._OptionFlg == true)
         {
             EasOut();
@@ -82,7 +88,7 @@ public class OptionMenu : MonoBehaviour
             }
 
         } 
-        else
+        else if(pause._showMenu == true && pause._OptionFlg == false)
         {
             EasIN();
             Outtime = 0;
@@ -118,6 +124,7 @@ public class OptionMenu : MonoBehaviour
 
         void EasOut() //登場時
         {
+            PauseCancelSE = false;
             INFlg = true;
             Outtime += 0.33333f;
             if (Outtime < easingTime)
@@ -129,10 +136,13 @@ public class OptionMenu : MonoBehaviour
             {
                 _OptionPanel.localPosition = new Vector3(0, 0, 0);
                 _menu.localPosition = new Vector3(-490, 39.8f, 0);
+                
             }
         }
         void EasIN() //退場時
         {
+            PauseCancelSE = true;
+            OnCancelSE = false;
             if (INFlg == true)
             {
                 InTime += 0.33333f;
@@ -148,6 +158,7 @@ public class OptionMenu : MonoBehaviour
                     INFlg = false;
                     pause.CancelCount = 0;
                     pause.Decision = false;
+                    PauseCancelSE = false;
                 }
             }
         }
