@@ -350,7 +350,7 @@ public class Pausemenu : MonoBehaviour
             {
                 _pausepanel.localScale = new Vector3(0, 0, 1);
                 PanelClose = true;
-
+                MenuNumber = 0;
                 _PausePanel.SetActive(false);
             }
         }
@@ -366,6 +366,7 @@ public class Pausemenu : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
         
         SceneManager.LoadScene("Game");
+        MenuNumber = 0;
         Time.timeScale = 1;
     }
     private IEnumerator BacktoTitle() //シーンチェンジ用
@@ -374,6 +375,7 @@ public class Pausemenu : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.5f);  //1.5秒待った後にシーンをロード
         
         SceneManager.LoadScene("Title");
+        MenuNumber = 0;
         Time.timeScale = 1;
     }
 }

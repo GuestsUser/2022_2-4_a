@@ -36,14 +36,38 @@ public class PauseSE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(SEflag);
 
         if (Count == 2)
         {
-            if (_option.OnCancelSE == true)
+            if (_option.OnCancelSE == true) //キャンセル時
             {
+                SEflag = true;
                 audio.PlayOneShot(Cancel);
                 Count -= 1;
+            }
+
+            //↓オプションメニューで上入力時
+            if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == -1) ||Input.GetAxis("Vertical2") == -1)
+            {
+                if (SEflag == true)
+                {
+                    Debug.Log("aaa");
+                    audio.PlayOneShot(Cursolmove);
+                    SEflag = false;
+                }
+            }//↓オプションメニューで下入力時
+            else if ((!Input.GetButton("A") && Input.GetAxis("Vertical") == 1) ||Input.GetAxis("Vertical2") == 1)
+            {
+                if (SEflag == true)
+                {
+                    audio.PlayOneShot(Cursolmove);
+                    SEflag = false;
+                }
+            }
+            else if(!Input.anyKey)
+            {
+                SEflag = true;
             }
         }
 
@@ -62,12 +86,9 @@ public class PauseSE : MonoBehaviour
                     SEflag = true;
                 }
             }
-
-            
-
         }
 
-        Debug.Log(DecisionFlag);
+        //Debug.Log(DecisionFlag);
 
         if (_pause._OptionFlg == false)
         {
@@ -183,6 +204,7 @@ public class PauseSE : MonoBehaviour
                     //break;
             }
         }
+        //
     }
 }
 
