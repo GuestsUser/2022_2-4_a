@@ -11,7 +11,7 @@ public class Pausemenu : MonoBehaviour
     private Easingtype type;
     private float time = 0.0f;
     private float InTime = 0.0f;
-    private float easingTime = 2.0f;
+    private float easingTime = 0.8f;
 
     bool PanelClose;
 
@@ -34,7 +34,7 @@ public class Pausemenu : MonoBehaviour
     public int _MenuNumber { get { return MenuNumber; } }
     public GameObject Cursor; //カーソルのポジション取得に必要
     bool CursorFlg; //入力長押し対策
-    bool Decision; //決定を押したか押してないか
+    public bool Decision; //決定を押したか押してないか
 
     RectTransform _Cursor; //Cursor動かすのに必要
 
@@ -62,7 +62,7 @@ public class Pausemenu : MonoBehaviour
     /*オプションメニュ～に必要なもの*/
     //bool OptionFlg;
     public bool _OptionFlg;
-    int CancelCount;
+    public int CancelCount;
 
     // Start is called before the first frame update
     void Start()
@@ -92,6 +92,7 @@ public class Pausemenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(_OptionFlg);
         if (_OptionFlg == false)
         {
             //Debug.Log(time);
@@ -128,7 +129,7 @@ public class Pausemenu : MonoBehaviour
                 {
                     if(CancelCount == 0) //オプションメニュー表示からBを押すとポーズも消えてしまう問題対策
                     {
-                        if (Input.GetButton("B"))//Bボタンを押したら
+                        if (!Input.GetButton("A") && Input.GetButton("B"))//Bボタンを押したら
                         {
                             if (pushFlag == false) //押されてないっていうステータスを
                             {
@@ -167,7 +168,7 @@ public class Pausemenu : MonoBehaviour
                             InTime = 0;
                             ShowMenu = true;
                         }
-                        else if(pushFlag == true && CancelCount == 0)
+                        else if(!Input.GetButton("A") && pushFlag == true && CancelCount == 0)
                         {
                             pushFlag = true;
                             Time.timeScale = 1;
@@ -259,15 +260,13 @@ public class Pausemenu : MonoBehaviour
 
                 _Cursor.localPosition = new Vector3(0, -45, 0);
                 
-                if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
+                if (Input.GetAxis("Vertical")==0 && Input.GetAxis("Vertical2") == 0 && Input.GetButton("A"))
                 {
                     if (Decision == false)
                     {
                         Decision = true;
-                        //オプションフラグ
                         _OptionFlg = true;
                         CancelCount = 1;
-
                     }
                 }
                 break;

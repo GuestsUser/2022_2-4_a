@@ -18,7 +18,7 @@ public class OptionMenu : MonoBehaviour
     /**/
 
     /*カーソルムーブ*/
-    public GameObject Cursor;
+    public GameObject Cursor; //Y35,-45
     RectTransform _Cursor;
 
     public static int MenuNumber = 0;
@@ -31,10 +31,15 @@ public class OptionMenu : MonoBehaviour
     /*イージング*/
     private float Outtime = 0.0f;
     private float InTime = 0.0f;
-    private float easingTime = 20.0f;
+    private float easingTime = 5.0f;
+
+    bool INFlg; //EasInしても良いよフラグ
 
     /*ロード用*/
     bool LoadFlg;
+
+    /*SE用*/
+    public bool OnCancelSE;
 
     //オプションメニューの隠れている位置 X(490)
     //出てくるときのイメージ オプションを押したら右から登場
@@ -46,7 +51,10 @@ public class OptionMenu : MonoBehaviour
         ShowFlg = false;
         LoadFlg = false;
 
+        INFlg = false;
 
+        CursorFlg = false;
+        OnCancelSE = false;
     }
 
     // Update is called once per frame
@@ -57,7 +65,7 @@ public class OptionMenu : MonoBehaviour
 
     void ShowOption()
     {
-        if(pause._showMenu == true)
+        if (pause._showMenu == true)
         {
             LoadObject();
         }
@@ -66,20 +74,27 @@ public class OptionMenu : MonoBehaviour
             EasOut();
             InTime = 0;
 
-            if (Input.GetButton("Start") || Input.GetButton("B"))//Bボタンを押したら
+            if (!Input.GetButton("A") && Input.GetButton("Start") || Input.GetButton("B"))//Bボタンを押したら
             {
+                OnCancelSE = true;
                 pause._OptionFlg = false;
+
             }
-            
-        }
+
+        } 
         else
         {
-            //EasIN();
+            EasIN();
             Outtime = 0;
         }
         void CursorMove()
         {
+            CursorFlg = true;
+            if (CursorFlg)
+            {
 
+            }
+            
         }
 
         void LoadObject()
@@ -103,30 +118,37 @@ public class OptionMenu : MonoBehaviour
 
         void EasOut() //登場時
         {
+            INFlg = true;
             Outtime += 0.33333f;
             if (Outtime < easingTime)
             {
-                _OptionPanel.localPosition = new Vector3((Easing.ExpOut(Outtime, easingTime, 480, 0)), 0, 0);
-                _menu.localPosition = new Vector3((Easing.ExpOut(Outtime, easingTime, 0, -480)), 39.8f, 0);
+                _OptionPanel.localPosition = new Vector3((Easing.ExpOut(Outtime, easingTime, 490, 0)), 0, 0);
+                _menu.localPosition = new Vector3((Easing.ExpOut(Outtime, easingTime, 0, -490)), 39.8f, 0);
             }
             else
             {
                 _OptionPanel.localPosition = new Vector3(0, 0, 0);
-                _menu.localPosition = new Vector3(-480, 39.8f, 0);
+                _menu.localPosition = new Vector3(-490, 39.8f, 0);
             }
         }
         void EasIN() //退場時
         {
-            InTime += 0.33333f;
-            if (InTime < easingTime)
+            if (INFlg == true)
             {
-                _OptionPanel.localPosition = new Vector3((Easing.ExpOut(InTime, easingTime, 0, 480)), 0, 0);
-                _menu.localPosition = new Vector3((Easing.ExpOut(InTime, easingTime, -480, 0)), 39.8f, 0);
-            }
-            else
-            {
-                _OptionPanel.localPosition = new Vector3(480, 39.8f, 0);
-                _menu.localPosition = new Vector3(0, 39.8f, 0);
+                InTime += 0.33333f;
+                if (InTime < easingTime)
+                {
+                    _OptionPanel.localPosition = new Vector3((Easing.ExpOut(InTime, easingTime, 0, 490)), 0, 0);
+                    _menu.localPosition = new Vector3((Easing.ExpOut(InTime, easingTime, -490, 0)), 39.8f, 0);
+                }
+                else
+                {
+                    _OptionPanel.localPosition = new Vector3(490, 39.8f, 0);
+                    _menu.localPosition = new Vector3(0, 39.8f, 0);
+                    INFlg = false;
+                    pause.CancelCount = 0;
+                    pause.Decision = false;
+                }
             }
         }
     }
