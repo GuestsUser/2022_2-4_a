@@ -27,6 +27,11 @@ public class TitleSE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!Input.anyKey)
+        {
+            DecisionFlag = false;
+        }
+
         if(DecisionFlag == false)
         {
 
@@ -59,8 +64,6 @@ public class TitleSE : MonoBehaviour
                     {
                         audio.PlayOneShot(Decision);
                         SEflag = true;
-
-                    
                         DecisionFlag = true;
                     }
             }

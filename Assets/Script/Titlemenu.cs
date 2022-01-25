@@ -150,7 +150,7 @@ public class Titlemenu : MonoBehaviour
     }
     private void Side_Scroll()
     {
-        if (Input.GetAxis("Horizontal") == 1 || Input.GetAxis("Horizontal2") == 1) //右
+        if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetAxis("Horizontal") == 1 || Input.GetAxis("Horizontal2") == 1) //右
         {
             if (pushFlag2 == false)
             {
@@ -173,7 +173,7 @@ public class Titlemenu : MonoBehaviour
             }
 
         }
-        else if (Input.GetAxis("Horizontal") == -1 || Input.GetAxis("Horizontal2") == -1) //左
+        else if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetAxis("Horizontal") == -1 || Input.GetAxis("Horizontal2") == -1) //左
         {
             if (pushFlag2 == false)
             {
