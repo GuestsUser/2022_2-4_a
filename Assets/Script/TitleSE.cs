@@ -44,11 +44,13 @@ public class TitleSE : MonoBehaviour
             LoadObject();
             if(_option.CancelFlg == true)
             {
-                if(SEflag == false)
+                Debug.Log("SEflag");
+                if (SEflag == false)
                 {
-                    SEflag = true;
+                    
                     audio.PlayOneShot(Cancel);
                     _option.CancelFlg = false;
+                    SEflag = true;
                 }
             }
         }
@@ -96,7 +98,7 @@ public class TitleSE : MonoBehaviour
 
             if (Title._MenuNumber == 0) //モード選択のところにカーソルがある時
             {
-                if ((!Input.GetButton("A") && Input.GetAxis("Horizontal") == 1) || (!Input.GetButton("A") && Input.GetAxis("Horizontal2") == 1) || (!Input.GetButton("A") && Input.GetAxis("Horizontal") == -1) || (!Input.GetButton("A") && Input.GetAxis("Horizontal2") == -1))
+                if ((Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetAxis("Horizontal") == 1 || Input.GetAxis("Horizontal2") == 1) || (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetAxis("Horizontal") == -1 || Input.GetAxis("Horizontal2") == -1))
                 {
                     if (SEflag2 == false)
                     {

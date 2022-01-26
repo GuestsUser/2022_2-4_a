@@ -69,7 +69,6 @@ public class TitleOption : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(ShowMenu);
         if (Title.OptionFlg == true)
         {
             LoadObject();
@@ -85,9 +84,9 @@ public class TitleOption : MonoBehaviour
 
             if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetButton("Start") || Input.GetButton("B"))
             {
-                Debug.Log("通りました");
                 ShowMenu = false;
                 EasINFlg = true;
+                CancelFlg = true;
             }
 
         }
@@ -199,7 +198,7 @@ public class TitleOption : MonoBehaviour
     }
     private void EasIn()
     {
-        
+        Title.OptionFlg = false;
         Outtime = 0;
         
             InTime += 0.333333f / 3;
@@ -211,9 +210,7 @@ public class TitleOption : MonoBehaviour
             else
             {
                 _OptionPanel.localScale = new Vector3(0, 0, 1);
-                Debug.Log("aaaaaa");
-                //
-                Title.OptionFlg = false;
+                
                 MenuNumber = 0;
                 OptionPanel.SetActive(false);
                 EasINFlg = false;
