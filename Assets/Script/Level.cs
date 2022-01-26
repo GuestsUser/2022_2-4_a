@@ -143,6 +143,7 @@ public class Level : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        audio_player.volume = SoundVolumu.BGMVol / 100;
 
         if (otetuki > 1 || Time.timeScale <= 0)
         {
