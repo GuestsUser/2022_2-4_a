@@ -41,6 +41,7 @@ public class Titlemenu : MonoBehaviour
     bool minusFlag = false; //左横スクロール用
 
     bool Decision; //決定を押した
+    public bool OptionFlg;
 
     /*色変える時に必要*/
     Text _Mode1;
@@ -49,6 +50,7 @@ public class Titlemenu : MonoBehaviour
     Text _end;
     /*色変える時に必要*/
 
+    TitleOption _option;
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +77,10 @@ public class Titlemenu : MonoBehaviour
         Mode2rect.localPosition = new Vector3(-375, 0, 0);
 
         Decision = false;
+        OptionFlg = false;
+
+
+        _option = GetComponent<TitleOption>();
     }
 
     // Update is called once per frame
@@ -83,7 +89,11 @@ public class Titlemenu : MonoBehaviour
         //Debug.Log(ModeNumber);
         if (Decision == false)
         {
-            CursorMove();
+            if(OptionFlg == false)
+            {
+                CursorMove();
+            }
+            
         }
         
     }
@@ -238,12 +248,17 @@ public class Titlemenu : MonoBehaviour
                 _Mode2.color = new Color(0, 0, 0, 1);
 
                 rect.localPosition = new Vector3(0, -150, 0);
-                if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
+                if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Vertical2") == 0 && Input.GetButton("A"))
                 {
-                    //StartCoroutine(ChangeCoroutine());
+                    if (pushFlag == false)
+                    {
+                        OptionFlg = true;
+                        _option.ShowMenu = true;
 
+                        pushFlag = true;
+                    }
+                        
                 }
-                //Debug.Log("1");
                 break;
             case 2: //ゲームを終了
                 _end.color = new Color(1, 1, 1, 1);
@@ -255,10 +270,8 @@ public class Titlemenu : MonoBehaviour
                 rect.localPosition = new Vector3(0, -220, 0);
                 if (Input.GetButton("A") || (Input.GetButton("A") && Input.GetAxis("Vertical") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == 1) || (Input.GetButton("A") && Input.GetAxis("Vertical") == -1) || (Input.GetButton("A") && Input.GetAxis("Vertical2") == -1))
                 {
-                    //pushScene = true;
                     StartCoroutine(EndCoroutine());
                 }
-                //Debug.Log("2");
                 break;
 
         }
@@ -279,19 +292,15 @@ public class Titlemenu : MonoBehaviour
                 break;
         }
         SceneManager.LoadScene("Game");
-        //SceneManager.LoadScene("Result");
         MenuNumber = 0;
         ModeNumber = 0;
-        //Time.timeScale = 1;
     }
     private IEnumerator EndCoroutine()
     {
         Decision = true;
         yield return new WaitForSecondsRealtime(1.5f);
         Application.Quit();
-
     }
-
     private void arrowanim()
     {
         ArrowAnim.SetTrigger("ArrowMove");

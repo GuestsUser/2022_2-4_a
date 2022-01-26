@@ -6,13 +6,21 @@ public class TitleSE : MonoBehaviour
 {
     public AudioClip Cursolmove; //カーソル移動
     public AudioClip Decision; //決定音
+    public AudioClip Cancel; //キャンセル音
+
     //private static bool SEflag;
     bool SEflag; //効果音を鳴らせるフラグ
     bool SEflag2; //効果音を鳴らせるフラグ
     bool DecisionFlag;
+
+    bool LoadFlg;
+
     AudioSource audio;//後々使う(音量調整など)
 
     Titlemenu Title; //Titlemenuの変数を持ってくるよう
+
+    public GameObject OptionPanel;
+    TitleOption _option;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +30,29 @@ public class TitleSE : MonoBehaviour
         SEflag = false;
         SEflag2 = false;
         DecisionFlag = false;
+
+        LoadFlg = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        audio.volume = SoundVolumu.SEVol / 100;
+
+        if (Title.OptionFlg == false)
+        {
+            LoadObject();
+            if(_option.CancelFlg == true)
+            {
+                if(SEflag == false)
+                {
+                    SEflag = true;
+                    audio.PlayOneShot(Cancel);
+                    _option.CancelFlg = false;
+                }
+            }
+        }
+
         if (!Input.anyKey)
         {
             DecisionFlag = false;
@@ -87,6 +113,16 @@ public class TitleSE : MonoBehaviour
 
         }
 
+        
+    }
+    void LoadObject()
+    {
+        if(LoadFlg == false)
+        {
+            OptionPanel = GameObject.Find("Cursor");
+            _option = OptionPanel.GetComponent<TitleOption>();
+            LoadFlg = true;
+        }
         
     }
 }
