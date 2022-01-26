@@ -98,9 +98,9 @@ public class Level : MonoBehaviour
     public int runcount = 0;            /*ゴール回数を記録する変数*/
     public int otetuki = 0;             /*失敗したときの変数(上限は２)*/
     public int otetuki_interval = 0;    /*往復したときにお手付きをリセットする変数*/
+    public int levelcount = 0;          /*ゴールに間に合わなかったときの強制レベルアップ変数*/
     public float time = 0f;             /*制限時間の変数*/
     public float timemax = 5f;          /*5秒後にスタートさせる変数*/
-    public float time_interval = 0f;    /*次の音階が鳴るまでのインターバル変数*/
     public bool StartGame = true;       /*ゲーム中かどうかを入れる(プレーヤー担当の人よろしく💛)*/
     /*シャトルランのシステム変数*/
 
@@ -224,15 +224,15 @@ public class Level : MonoBehaviour
 
                 }
 
+                levelcount++;/*強制レベルアップ変数にプラス1*/
                 time = 0;/*制限時間をリセット*/
-                time_interval = 0;/*インターバルタイムをリセット*/
                 otetuki_interval = 0;/*お手付きインターバルをリセット*/
 
             }
             /*制限時間を過ぎたら*/
 
             /*ゴール回数が一定数を超えたら*/
-            if (runcount >= level_count[level] && time < level_time[level] && level < 22 && otetuki < 2)
+            if ((runcount >= level_count[level] && time < level_time[level] && level < 22 && otetuki < 2) || levelcount >= level_count[level])
             {
 
                 level++;/*シャトルランのレベルを上げる*/
