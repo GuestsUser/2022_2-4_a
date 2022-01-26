@@ -9,6 +9,10 @@ public class Game_Over_Animation : MonoBehaviour
 	float fadeSpeed = 0.02f;        //透明度が変わるスピードを管理
 	public float red, green, blue, alfa;   //パネルの色、不透明度を管理
 
+	[SerializeField] private AudioClip end_sound;    //終了時のSE
+	int se_oneshot = 1;
+	[SerializeField] private AudioSource End_Audio;   //SE用のオーディオソース
+
 	public bool isFadeOut = false;  //フェードアウト処理の開始、完了を管理するフラグ
 	public bool isFadeIn = false;   //フェードイン処理の開始、完了を管理するフラグ
 
@@ -30,9 +34,14 @@ public class Game_Over_Animation : MonoBehaviour
 	{
 		if (isFadeIn)
 		{
+            if (se_oneshot >= 1)
+            {
+				End_Audio.PlayOneShot(end_sound);
+				se_oneshot--;
+			}
 			StartFadeIn();
-			Invoke("StartFadeOut", 3f);
-			Invoke("NextScene", 4f);
+			Invoke("StartFadeOut", 2.5f);
+			Invoke("NextScene", 3.3f);
 		}
 
 		//if (isFadeOut)
