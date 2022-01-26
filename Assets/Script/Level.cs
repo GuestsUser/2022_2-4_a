@@ -63,35 +63,35 @@ public class Level : MonoBehaviour
     };
     /*往復回数との比較変数*/
 
-    /*次の音階がなるまでのインターバル*/
-    public float[] level_interval =
-    {
+    ///*次の音階がなるまでのインターバル*/
+    //public float[] level_interval =
+    //{
 
-        1f,        /*Level1*/
-        1.75f,     /*Level2*/
-        0.9f,      /*Level3*/
-        0.9f,      /*Level4*/
-        0.8f,      /*Level5*/
-        0.8f,      /*Level6*/
-        0.7f,      /*Level7*/
-        0.7f,      /*Level8*/
-        0.6f,      /*Level9*/
-        0.6f,      /*Level10*/
-        0.5f,      /*Level11*/
-        0.5f,      /*Level12*/
-        0.4f,      /*Level13*/
-        0.4f,      /*Level14*/
-        0.3f,      /*Level15*/
-        0.3f,      /*Level16*/
-        0.2f,      /*Level17*/
-        0.2f,      /*Level18*/
-        0.1f,      /*Level19*/
-        0.1f,      /*Level20*/
-        0.1f,      /*Level21*/
-        0.1f,      /*Level22*/
+    //    0f,        /*Level1*/
+    //    0f,     /*Level2*/
+    //    0f,      /*Level3*/
+    //    0f,      /*Level4*/
+    //    0f,      /*Level5*/
+    //    0f,      /*Level6*/
+    //    0f,      /*Level7*/
+    //    0f,      /*Level8*/
+    //    0f,      /*Level9*/
+    //    0f,      /*Level10*/
+    //    0f,      /*Level11*/
+    //    0f,      /*Level12*/
+    //    0f,      /*Level13*/
+    //    0f,      /*Level14*/
+    //    0f,      /*Level15*/
+    //    0f,      /*Level16*/
+    //    0f,      /*Level17*/
+    //    0f,      /*Level18*/
+    //    0f,      /*Level19*/
+    //    0f,      /*Level20*/
+    //    0f,      /*Level21*/
+    //    0f,      /*Level22*/
 
-    };
-    /*次の音階がなるまでのインターバル*/
+    //};
+    ///*次の音階がなるまでのインターバル*/
 
     /*シャトルランのシステム変数*/
     public int level = 0;               /*シャトルランのレベルアップ変数*/
@@ -173,15 +173,17 @@ public class Level : MonoBehaviour
             if (timemax < 0f)
             {
 
-                /*インターバルが終わってから数える*/
-                time_interval += Time.deltaTime;
-                if (time_interval >= level_interval[level])
-                {
+                time += Time.deltaTime;
 
-                    time += Time.deltaTime;
+                ///*インターバルが終わってから数える*/
+                //time_interval += Time.deltaTime;
+                //if (time_interval >= level_interval[level])
+                //{
 
-                }
-                /*インターバルが終わってから数える*/
+                //    time += Time.deltaTime;
+
+                //}
+                ///*インターバルが終わってから数える*/
 
             }
             else
