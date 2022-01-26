@@ -213,6 +213,12 @@ public class Level : MonoBehaviour
                         otetuki++;/*お手付きプラス1*/
 
                     }
+                    else if (otetuki_interval < otetuki)/*インターバルよりお手付きのほうが大きかったら*/
+                    {
+
+                        otetuki++;
+
+                    }
 
                 }
 
