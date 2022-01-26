@@ -143,7 +143,6 @@ public class ResultScript : MonoBehaviour
                 FadeFlg = true;
             }
         }
-        
         _FadePanel.color = new Color(0, 0, 0, FadeOpacity / FadeMaxOpacity);
     }
     private void _ShowMenu()
