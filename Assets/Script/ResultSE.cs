@@ -34,6 +34,8 @@ public class ResultSE : MonoBehaviour
     {
         Debug.Log(Result._showMenu);
 
+        audio.volume = SoundVolumu.SEVol / 100;
+
         if (Result._showMenu == true) //決定ボタンを押していない間
         {
             if (DecisionFlag == false)
