@@ -24,7 +24,7 @@ public class Pausemenu : MonoBehaviour
     public bool _pushFlag { get { return pushFlag; } }
     bool push_scene; //現在何のシーンなのか　ひとりモードor通信モード
     public bool _push_scene { get { return push_scene; } }
-    bool GameOver; //ゲームが終わっているのか続いているのか
+    public bool GameOver; //ゲームが終わっているのか続いているのか
 
     RectTransform _pausepanel;
     /**/
@@ -65,8 +65,10 @@ public class Pausemenu : MonoBehaviour
     public int CancelCount;
 
     //ゲームオーバー時に必要
-    public GameObject _Game_Over;
-    Game_Over game_over;
+    //public GameObject _Game_Over;
+    public GameObject _level;
+
+    public Level level;
 
     // Start is called before the first frame update
     void Start()
@@ -91,15 +93,30 @@ public class Pausemenu : MonoBehaviour
         PanelClose = false;
 
         _OptionFlg = false;
-        _Game_Over = GameObject.Find("GameOver_flg");
-        game_over = _Game_Over.GetComponent<Game_Over>();
+        //GameOver = false;
+
+        //_Game_Over = GameObject.Find("GameOver_flg");
+        //game_over = _Game_Over.GetComponent<Game_Over>();
+        
+        _level = GameObject.Find("BGMSystem");
+        level = _level.GetComponent<Level>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(game_over.game_over_flg);
-        if (game_over.game_over_flg == false)
+        //Debug.Log(game_over.game_over_flg);
+
+        if (level.otetuki > 1)
+        {
+            GameOver = true;
+        }
+        else
+        {
+            GameOver = false;
+        }
+
+        if (GameOver == false)
         {
             if (_OptionFlg == false)
             {
@@ -122,6 +139,10 @@ public class Pausemenu : MonoBehaviour
                 //Debug.Log("Updateは正常に動いています");
                 Pause();
             }
+        }
+        else
+        {
+            GameOver = true;
         }
         
         
@@ -215,7 +236,10 @@ public class Pausemenu : MonoBehaviour
             FadePanel = GameObject.Find("FadePanel");
             _FadePanel = FadePanel.GetComponent<Image>();
 
+
             
+            
+
             LoadFlg = true;
         }
     }
