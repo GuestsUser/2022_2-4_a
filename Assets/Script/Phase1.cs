@@ -20,6 +20,8 @@ public class Phase1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        se_resource.audio_source.volume= SoundVolumu.SEVol / 100; //リザルトシーンではオプションを開けないので一度だけ音量調整
+
         P1UI obj = new P1UI(this);
         StartCoroutine("Fade");
         StartCoroutine(obj.SoundStart());

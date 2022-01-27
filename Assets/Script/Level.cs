@@ -242,7 +242,7 @@ public class Level : MonoBehaviour
             {
 
                 PlayerPrefs.SetInt("runcount", runcount);
-                PlayerPrefs.SetInt("level", level);
+                PlayerPrefs.SetInt("level", level+1);//レベルを1から数える
                 audio_player.Stop();/*音源を停止*/
 
                 StartGame = false;/*ゲームフラグをファルスに*/
