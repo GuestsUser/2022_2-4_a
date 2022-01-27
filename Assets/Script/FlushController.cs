@@ -30,14 +30,18 @@ public class FlushController : MonoBehaviour
 
     void Update()
     {
-        //オブジェクトのAlpha値を更新
-        if (level.otetuki > 0)
+        //お手付き1回したら
+        if (level.otetuki == 1)
         {
+            //Warning表示
             image.enabled = true;
+
+            //点滅フラグがtrueなら
             if (Blinking == true)
             {
                 image.color = GetAlphaColor(image.color);
             }
+
             //Warning画像スクロール
             if (Scroll == true)
             {
@@ -45,6 +49,7 @@ public class FlushController : MonoBehaviour
                 rect.x = (rect.x + X_Speed * Time.unscaledDeltaTime) % 1.0f;
                 warning.uvRect = rect;
             }
+            //Warning画像逆スクロール
             else if (ReScroll == true)
             {
                 var rect = warning.uvRect;
@@ -52,28 +57,12 @@ public class FlushController : MonoBehaviour
                 warning.uvRect = rect;
             }
         }
-        else if(gameover.game_over_flg == true)
-        {
-            image.enabled = false;
-        }
+        //お手付きが0か1より大きければ
         else
         {
+            //Warning非表示
             image.enabled = false;
         }
-
-        ////Warning画像スクロール
-        //if (Scroll == true)
-        //{
-        //    var rect = warning.uvRect;
-        //    rect.x = (rect.x + X_Speed * Time.unscaledDeltaTime) % 1.0f;
-        //    warning.uvRect = rect;
-        //}
-        //else if(ReScroll == true)
-        //{
-        //    var rect = warning.uvRect;
-        //    rect.x = (rect.x - X_Speed * Time.unscaledDeltaTime) % 1.0f;
-        //    warning.uvRect = rect;
-        //}
     }
 
     //Alpha値を更新してColorを返す

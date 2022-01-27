@@ -45,7 +45,7 @@ public class SpeedGage : MonoBehaviour
         texts[4].text = "second: " + second;
 
         //カウントダウン中,待機中は連打できないようにする
-        if (playercontroller.stop_flg == false && level.timemax < 0f)
+        if (playercontroller.stop_flg == false && level.timemax < 0f && level.otetuki <= 1)
         {
             //Aボタンを連打されたとき
             if (Input.GetKeyDown("joystick button 0"))
