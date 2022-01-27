@@ -173,10 +173,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Blinking: 0
   Scroll: 0
-  ReScroll: 1
+  ReScroll: 0
   speed: 2
   level: {fileID: 574290802}
-  gameover: {fileID: 870576460}
+  gameover: {fileID: 0}
   warning: {fileID: 59587161}
 --- !u!114 &59587161
 MonoBehaviour:
@@ -1746,11 +1746,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 870576459}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4fdc04fd7d4f8b4087bae728e35cafc, type: 3}
+  m_Script: {fileID: 11500000, guid: cf72d1df3d31e61408ef18963e83ed28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Animation_flg: {fileID: 751515832}
-  game_over_flg: 1
+  game_over_flg: 0
 --- !u!4 &870576461
 Transform:
   m_ObjectHideFlags: 0
@@ -3406,7 +3406,7 @@ MonoBehaviour:
   ReScroll: 0
   speed: 2
   level: {fileID: 574290802}
-  gameover: {fileID: 870576460}
+  gameover: {fileID: 0}
   warning: {fileID: 1816449779}
 --- !u!114 &1816449779
 MonoBehaviour:
@@ -3759,7 +3759,7 @@ MonoBehaviour:
   ReScroll: 0
   speed: 2
   level: {fileID: 574290802}
-  gameover: {fileID: 870576460}
+  gameover: {fileID: 0}
   warning: {fileID: 2037504083}
 --- !u!114 &2037504083
 MonoBehaviour:
@@ -3850,7 +3850,7 @@ MonoBehaviour:
   ReScroll: 0
   speed: 2
   level: {fileID: 574290802}
-  gameover: {fileID: 870576460}
+  gameover: {fileID: 0}
   warning: {fileID: 2048620840}
 --- !u!114 &2048620840
 MonoBehaviour:

@@ -5,38 +5,29 @@ using UnityEngine.SceneManagement;
 
 public class Game_Over : MonoBehaviour
 {
-    public int miss_count;
-    public bool miss;
-    public bool game_over;  //ゲームオーバーフラグ
+    public GameObject Animation_flg;
+    Game_Over_Animation var;
+
+    public bool game_over_flg;  //ゲームオーバーフラグ
     
     void Start()
     {
-        miss_count = 0;
-
-        miss = false;
-        game_over = false;  //フラグの初期化
+        game_over_flg = false;  //フラグの初期化
     }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Joystick1Button0))
+        var = Animation_flg.GetComponent<Game_Over_Animation>();   /*ゲームオーバースクリプトを空箱に代入*/
+        if (game_over_flg)      //ゲームオーバーになったら↓
         {
-            miss = true;
-            if (miss)
-            {
-                if (miss_count >= 1)
-                {
-                    game_over = true;
-                }
-                miss_count++;
-                miss = false;
-            }
+            //Debug.Log("リザルトに遷移"); // デバッグ用
+            var.isFadeIn = true;
+            game_over_flg = false;
         }
 
-            if (game_over)      //ゲームオーバーになったら↓
-            {
-            Debug.Log("リザルトに遷移");
-                //SceneManager.LoadScene("Result");
-            }
+        if (var.next_scene == true)
+        {
+            SceneManager.LoadScene("Result");
+        }
     }
 }
