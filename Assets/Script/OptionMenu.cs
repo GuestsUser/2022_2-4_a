@@ -122,7 +122,7 @@ public class OptionMenu : MonoBehaviour
     }
     void CursorMove()
     {
-        if (!Input.GetButton("A") && Input.GetAxis("Vertical") == -1 || Input.GetAxis("Vertical2") == -1) //下に入力された時
+        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Horizontal2") == 0 && Input.GetAxis("Vertical") == -1 || Input.GetAxis("Vertical2") == -1) //下に入力された時
         {
             if (CursorFlg == false)
             {
@@ -130,7 +130,7 @@ public class OptionMenu : MonoBehaviour
                 if (++MenuNumber > 1) MenuNumber = 0;
             }
         }
-        else if (!Input.GetButton("A") && Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical2") == 1)//上に入力された時
+        else if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Horizontal2") == 0 && Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical2") == 1)//上に入力された時
         {
             if (CursorFlg == false)
             {
