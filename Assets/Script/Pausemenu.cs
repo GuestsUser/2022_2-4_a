@@ -64,6 +64,10 @@ public class Pausemenu : MonoBehaviour
     public bool _OptionFlg;
     public int CancelCount;
 
+    //ゲームオーバー時に必要
+    public GameObject _Game_Over;
+    Game_Over game_over;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,32 +91,39 @@ public class Pausemenu : MonoBehaviour
         PanelClose = false;
 
         _OptionFlg = false;
+        _Game_Over = GameObject.Find("GameOver_flg");
+        game_over = _Game_Over.GetComponent<Game_Over>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_OptionFlg == false)
+        Debug.Log(game_over.game_over_flg);
+        if (game_over.game_over_flg == false)
         {
-            //Debug.Log(time);
-            EasOut();
-            if (Time.timeScale == 0)
+            if (_OptionFlg == false)
             {
-
-                LoadObject();
-
-
-
-                FadeIN();
-                if (push_scene == false)
+                //Debug.Log(time);
+                EasOut();
+                if (Time.timeScale == 0)
                 {
-                    CursorMove();
-                }
 
+                    LoadObject();
+
+
+
+                    FadeIN();
+                    if (push_scene == false)
+                    {
+                        CursorMove();
+                    }
+
+                }
+                //Debug.Log("Updateは正常に動いています");
+                Pause();
             }
-            //Debug.Log("Updateは正常に動いています");
-            Pause();
         }
+        
         
     }
 
