@@ -39,6 +39,8 @@ public class TitleSE : MonoBehaviour
     {
         audio.volume = SoundVolumu.SEVol / 100;
 
+        Debug.Log(DecisionFlag);
+
         if (Title.OptionFlg == false)
         {
             LoadObject();
@@ -55,12 +57,16 @@ public class TitleSE : MonoBehaviour
             }
         }
 
-        //if (!Input.anyKey)
-        //{
-        //    DecisionFlag = false;
-        //}
+        if (!Input.anyKey)
+        {
+            if(Title.OptionFlg == true)
+            {
+                DecisionFlag = false;
+            }
+            
+        }
 
-        if(DecisionFlag == false)
+        if (DecisionFlag == false)
         {
 
             //Debug.Log(Title._MenuNumber);
