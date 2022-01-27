@@ -55,10 +55,10 @@ public class TitleSE : MonoBehaviour
             }
         }
 
-        if (!Input.anyKey)
-        {
-            DecisionFlag = false;
-        }
+        //if (!Input.anyKey)
+        //{
+        //    DecisionFlag = false;
+        //}
 
         if(DecisionFlag == false)
         {
