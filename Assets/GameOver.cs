@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Game_Over : MonoBehaviour
+public class GameOver : MonoBehaviour
 {
     public GameObject Animation_flg;
     Game_Over_Animation var;

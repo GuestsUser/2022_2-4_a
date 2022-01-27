@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameOver : MonoBehaviour
+public class Game_Over : MonoBehaviour
 {
     public int miss_count;
     public bool miss;

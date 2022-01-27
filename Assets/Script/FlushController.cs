@@ -38,25 +38,42 @@ public class FlushController : MonoBehaviour
             {
                 image.color = GetAlphaColor(image.color);
             }
+            //Warning画像スクロール
+            if (Scroll == true)
+            {
+                var rect = warning.uvRect;
+                rect.x = (rect.x + X_Speed * Time.unscaledDeltaTime) % 1.0f;
+                warning.uvRect = rect;
+            }
+            else if (ReScroll == true)
+            {
+                var rect = warning.uvRect;
+                rect.x = (rect.x - X_Speed * Time.unscaledDeltaTime) % 1.0f;
+                warning.uvRect = rect;
+            }
+        }
+        else if(gameover.game_over_flg == true)
+        {
+            image.enabled = false;
         }
         else
         {
             image.enabled = false;
         }
 
-        //Warning画像スクロール
-        if (Scroll == true)
-        {
-            var rect = warning.uvRect;
-            rect.x = (rect.x + X_Speed * Time.unscaledDeltaTime) % 1.0f;
-            warning.uvRect = rect;
-        }
-        else if(ReScroll == true)
-        {
-            var rect = warning.uvRect;
-            rect.x = (rect.x - X_Speed * Time.unscaledDeltaTime) % 1.0f;
-            warning.uvRect = rect;
-        }
+        ////Warning画像スクロール
+        //if (Scroll == true)
+        //{
+        //    var rect = warning.uvRect;
+        //    rect.x = (rect.x + X_Speed * Time.unscaledDeltaTime) % 1.0f;
+        //    warning.uvRect = rect;
+        //}
+        //else if(ReScroll == true)
+        //{
+        //    var rect = warning.uvRect;
+        //    rect.x = (rect.x - X_Speed * Time.unscaledDeltaTime) % 1.0f;
+        //    warning.uvRect = rect;
+        //}
     }
 
     //Alpha値を更新してColorを返す
