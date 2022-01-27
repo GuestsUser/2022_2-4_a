@@ -241,7 +241,8 @@ public class Level : MonoBehaviour
             else if (otetuki >= 2)/*お手付きを連続で2回やったら*/
             {
 
-
+                PlayerPrefs.SetInt("runcount", runcount);
+                PlayerPrefs.SetInt("level", level);
                 audio_player.Stop();/*音源を停止*/
 
                 StartGame = false;/*ゲームフラグをファルスに*/
