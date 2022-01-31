@@ -16,6 +16,7 @@ public class ResultBGM : MonoBehaviour
     Phase3 Flg;
 
     float FadeVolume;
+    float MinusVolume;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,10 +37,11 @@ public class ResultBGM : MonoBehaviour
         if (Flg.end_bool == false)
         {
             audio.volume = SoundVolumu.BGMVol / 100;
+            MinusVolume = SoundVolumu.BGMVol / 50;
         }
         else
         {
-            FadeVolume--;
+            FadeVolume -= MinusVolume;
             audio.volume = ((SoundVolumu.BGMVol + FadeVolume) / 100);
             if (audio.volume < 0) BGMflg = false;
         }

@@ -41,6 +41,7 @@ public class Titlemenu : MonoBehaviour
     bool minusFlag = false; //左横スクロール用
 
     bool Decision; //決定を押した
+    public bool _Decision {get { return Decision; } }
     public bool OptionFlg;
 
     /*色変える時に必要*/
