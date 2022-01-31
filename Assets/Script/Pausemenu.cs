@@ -79,7 +79,7 @@ public class Pausemenu : MonoBehaviour
         pushFlag = false;
         push_scene = false;
         Decision = false;
-        CursorFlg = false; //19:42追加
+        CursorFlg = false; 
 
         FadeOpacity = 0;
         FadeMaxOpacity = 100;

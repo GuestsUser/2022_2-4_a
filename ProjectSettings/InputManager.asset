@@ -52,7 +52,7 @@ InputManager:
     invert: 0
     type: 2
     axis: 0
-    joyNum: 2
+    joyNum: 0
   - serializedVersion: 3
     m_Name: B
     descriptiveName: 
@@ -68,7 +68,7 @@ InputManager:
     invert: 0
     type: 2
     axis: 0
-    joyNum: 1
+    joyNum: 0
   - serializedVersion: 3
     m_Name: Y
     descriptiveName: 
@@ -84,7 +84,7 @@ InputManager:
     invert: 0
     type: 2
     axis: 0
-    joyNum: 4
+    joyNum: 0
   - serializedVersion: 3
     m_Name: A
     descriptiveName: 
@@ -196,7 +196,7 @@ InputManager:
     invert: 0
     type: 2
     axis: 0
-    joyNum: 7
+    joyNum: 0
   - serializedVersion: 3
     m_Name: Fire2
     descriptiveName: 
