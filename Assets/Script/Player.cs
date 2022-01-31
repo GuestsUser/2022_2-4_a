@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
 
     IEnumerator StaminaControl()
     {
-        float healing_time=1.0f;//回復が始まる秒数
+        float healing_time=1.2f;//回復が始まる秒数
         //float healing_rate=stamina.GetComponent<StaminaGage>().max_gage/3.0f;//1秒間で回復する値、この例なら3秒で最大値に達する
         float del_limit = 10.0f;//連打維持状態がこの時間に達する事でスタミナがすべて減る、秒指定
         float count = 0;//時間経過共通カウント
@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
             if (speed.GetComponent<SpeedGage>().RendaCount > 0 && old_pos != gameObject.transform.position)//位置を止められているとスタミナも減らない
             {
                 healing_wait = 0;
-                if (count < del_limit) { count += Time.deltaTime; } 
+                if (count < del_limit) { count += Time.deltaTime * speed.GetComponent<SpeedGage>().GageAmount; } 
                 else { count = del_limit; }
             }
             else

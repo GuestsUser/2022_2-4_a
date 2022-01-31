@@ -17,6 +17,9 @@ public class SpeedGage : MonoBehaviour
     bool isMashing;         //連打しているかどうか
     float second;           //連打間の秒数
 
+    [SerializeField] private float gage_down_interval = 0.25f; //この秒数だけ無入力状態が続けばゲージ減少が始まる
+    private float no_input_count = 0; //無入力状態時間記録
+
     [SerializeField] Text[] texts = null;
 
     //参照先
@@ -57,6 +60,7 @@ public class SpeedGage : MonoBehaviour
 
                 //秒数をリセット
                 second = 0f;
+                no_input_count = 0; //未入力状態もリセットする
 
                 //連打数を1増加
                 RendaCount++;
@@ -89,11 +93,12 @@ public class SpeedGage : MonoBehaviour
             //数えていて連打中でない時
             else if (!isMashing)
             {
-                //ゲージを減らす
-                DecreaseGage();
+                no_input_count += Time.deltaTime;
+
+                if (no_input_count > gage_down_interval) { DecreaseGage(); } //ゲージを減らす
 
                 //連打数が指定の数以上になった時
-                if(RendaCount >= StartCount)
+                if (RendaCount >= StartCount)
                 {
                     //連打状態にする
                     isMashing = true;
@@ -114,9 +119,9 @@ public class SpeedGage : MonoBehaviour
         else
         {
             texts[5].text = "数えていない";
+            no_input_count += Time.deltaTime;
 
-            //ゲージを減らす
-            DecreaseGage();
+            if (no_input_count > gage_down_interval ) { DecreaseGage(); } //ゲージを減らす
         }
     }
 
