@@ -25,7 +25,7 @@ public class Phase2 : MonoBehaviour
 
     public bool bool_start { get; set; } = false;//これがtrueになったタイミングではじめる
 
-    [SerializeField] private string[] rank_name = { "E", "D", "C", "B", "A", "S" }; //評価、要素番号が0に近い程低評価
+    [SerializeField] private string[] rank_name = { "E", "D", "C", "B", "A", "S","SS" }; //評価、要素番号が0に近い程低評価
     [SerializeField] private int level_max = 22; //レベル最大値、レベル最大値と評価の数に応じて評価区分を変化させる
 
     // Start is called before the first frame update
@@ -37,7 +37,9 @@ public class Phase2 : MonoBehaviour
         //ゲームシーンから持ってきた値の代入
         point.text = PlayerPrefs.GetInt("runcount", 0).ToString();
         level.text = PlayerPrefs.GetInt("level", 0).ToString();
-        rank.text = rank_name[(int)Mathf.Floor(PlayerPrefs.GetInt("level", 0) / (level_max / rank_name.Length))];
+        int rank_sub = (int)Mathf.Floor(PlayerPrefs.GetInt("level", 0) / (level_max / rank_name.Length));
+        if(rank_sub >= rank_name.Length) { rank_sub = rank_name.Length-1; } //最大値より大きくなってしまった場合最大値にする
+        rank.text = rank_name[rank_sub];
         key_system = new P2UI(this);
         StartCoroutine("WaitTask");
     }

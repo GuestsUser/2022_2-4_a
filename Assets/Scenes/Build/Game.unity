@@ -3126,6 +3126,26 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1217685581}
+    - target: {fileID: 3308225982727285242, guid: 017b4a52b5d34f647b20e7b0790e7671,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308225982727285242, guid: 017b4a52b5d34f647b20e7b0790e7671,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308225982727285242, guid: 017b4a52b5d34f647b20e7b0790e7671,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308225982727285242, guid: 017b4a52b5d34f647b20e7b0790e7671,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6995242887771905474, guid: 017b4a52b5d34f647b20e7b0790e7671,
         type: 3}
       propertyPath: m_LocalPosition.x

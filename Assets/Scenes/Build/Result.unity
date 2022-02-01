@@ -1443,6 +1443,7 @@ MonoBehaviour:
   - B
   - A
   - S
+  - SS
   level_max: 22
 --- !u!114 &1613865605
 MonoBehaviour:
